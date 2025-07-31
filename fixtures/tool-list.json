@@ -1,0 +1,261 @@
+{
+    "tools": [
+        {
+            "name": "create-object-default-user-with-address",
+            "inputSchema": {
+                "type": "object",
+                "required": [
+                    "address"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "userwithaddressidentifier",
+                        "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$",
+                        "nullable": true
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password",
+                        "pattern": "^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[\\!@#\\$%\\^&\\*\\-_\\+\\.]){1,})[a-zA-Z0-9\\!@#\\$%\\^&\\*\\-_\\+\\.]{6,42}$"
+                    },
+                    "address": {
+                        "type": "object",
+                        "required": [
+                            "street",
+                            "streetNumber",
+                            "zipcode",
+                            "city"
+                        ],
+                        "properties": {
+                            "street": {
+                                "maxLength": 65535,
+                                "minLength": 0,
+                                "type": "string",
+                                "example": "Lorem Ipsum",
+                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database"
+                            },
+                            "streetNumber": {
+                                "maxLength": 65535,
+                                "minLength": 0,
+                                "type": "string",
+                                "example": "Lorem Ipsum",
+                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database"
+                            },
+                            "zipcode": {
+                                "maxLength": 65535,
+                                "minLength": 0,
+                                "type": "string",
+                                "example": "Lorem Ipsum",
+                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database"
+                            },
+                            "city": {
+                                "maxLength": 65535,
+                                "minLength": 0,
+                                "type": "string",
+                                "example": "Lorem Ipsum",
+                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database"
+                            }
+                        },
+                        "description": "Represents an address which can verify if the zipcode is correct with some API call"
+                    }
+                }
+            },
+            "description": "Creates an instance of UserWithAddress",
+            "x-definition": "Apie\\Common\\Actions\\CreateObjectAction",
+            "x-fields": {
+                "create": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress",
+                "display-form": true
+            }
+        },
+        {
+            "name": "create-object-other-user-with-autoincrement-key",
+            "inputSchema": {
+                "type": "object",
+                "required": [
+                    "address"
+                ],
+                "properties": {
+                    "password": {
+                        "type": "string",
+                        "format": "password",
+                        "pattern": "^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[\\!@#\\$%\\^&\\*\\-_\\+\\.]){1,})[a-zA-Z0-9\\!@#\\$%\\^&\\*\\-_\\+\\.]{6,42}$"
+                    },
+                    "address": {
+                        "type": "object",
+                        "required": [
+                            "street",
+                            "streetNumber",
+                            "zipcode",
+                            "city"
+                        ],
+                        "properties": {
+                            "street": {
+                                "maxLength": 65535,
+                                "minLength": 0,
+                                "type": "string",
+                                "example": "Lorem Ipsum",
+                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database"
+                            },
+                            "streetNumber": {
+                                "maxLength": 65535,
+                                "minLength": 0,
+                                "type": "string",
+                                "example": "Lorem Ipsum",
+                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database"
+                            },
+                            "zipcode": {
+                                "maxLength": 65535,
+                                "minLength": 0,
+                                "type": "string",
+                                "example": "Lorem Ipsum",
+                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database"
+                            },
+                            "city": {
+                                "maxLength": 65535,
+                                "minLength": 0,
+                                "type": "string",
+                                "example": "Lorem Ipsum",
+                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database"
+                            }
+                        },
+                        "description": "Represents an address which can verify if the zipcode is correct with some API call"
+                    }
+                }
+            },
+            "description": "Creates an instance of UserWithAutoincrementKey",
+            "x-definition": "Apie\\Common\\Actions\\CreateObjectAction",
+            "x-fields": {
+                "create": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAutoincrementKey",
+                "display-form": true
+            }
+        },
+        {
+            "name": "create-object-other-animal",
+            "inputSchema": {
+                "type": "object",
+                "required": [
+                    "animalType"
+                ],
+                "properties": {
+                    "animalType": {
+                        "type": "string",
+                        "nullable": false
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "animalidentifier",
+                        "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$",
+                        "nullable": true
+                    },
+                    "hasMilk": {
+                        "type": "boolean",
+                        "nullable": false
+                    },
+                    "starving": {
+                        "type": "boolean",
+                        "nullable": false
+                    },
+                    "poisonous": {
+                        "type": "boolean",
+                        "nullable": false
+                    }
+                },
+                "oneOf": [
+                    {
+                        "type": "object",
+                        "required": [
+                            "animalType"
+                        ],
+                        "properties": {
+                            "animalType": {
+                                "enum": [
+                                    "cow"
+                                ],
+                                "type": "string",
+                                "nullable": false
+                            },
+                            "id": {
+                                "type": "string",
+                                "format": "animalidentifier",
+                                "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$",
+                                "nullable": true
+                            },
+                            "hasMilk": {
+                                "type": "boolean",
+                                "nullable": false
+                            }
+                        }
+                    },
+                    {
+                        "type": "object",
+                        "required": [
+                            "animalType"
+                        ],
+                        "properties": {
+                            "animalType": {
+                                "enum": [
+                                    "elephant"
+                                ],
+                                "type": "string",
+                                "nullable": false
+                            },
+                            "id": {
+                                "type": "string",
+                                "format": "animalidentifier",
+                                "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$",
+                                "nullable": true
+                            },
+                            "starving": {
+                                "type": "boolean",
+                                "nullable": false
+                            }
+                        }
+                    },
+                    {
+                        "type": "object",
+                        "required": [
+                            "animalType"
+                        ],
+                        "properties": {
+                            "animalType": {
+                                "enum": [
+                                    "fish"
+                                ],
+                                "type": "string",
+                                "nullable": false
+                            },
+                            "id": {
+                                "type": "string",
+                                "format": "animalidentifier",
+                                "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$",
+                                "nullable": true
+                            },
+                            "poisonous": {
+                                "type": "boolean",
+                                "nullable": false
+                            }
+                        }
+                    }
+                ],
+                "discriminator": {
+                    "propertyName": "animalType",
+                    "mapping": {
+                        "cow": "#/components/schemas/Cow-post",
+                        "elephant": "#/components/schemas/Elephant-post",
+                        "fish": "#/components/schemas/Fish-post"
+                    }
+                }
+            },
+            "description": "Creates an instance of Animal",
+            "x-definition": "Apie\\Common\\Actions\\CreateObjectAction",
+            "x-fields": {
+                "create": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal",
+                "display-form": true
+            }
+        }
+    ]
+}
