@@ -1,0 +1,18 @@
+services:
+  Apie\McpServer\RunMcpServerCommand:
+    arguments:
+      - '@Apie\McpServer\Factory\RunnerFactoryInterface'
+      - '@Apie\McpServer\Tool\ToolFactory'
+    tags:
+      - { name: 'console.command' }
+  Apie\McpServer\Factory\RunnerFactoryInterface:
+    alias: Apie\McpServer\Factory\RunnerFactory
+  Apie\McpServer\Factory\RunnerFactory:
+    arguments:
+      - '@logger'
+  Apie\McpServer\Tool\ToolFactory:
+    arguments:
+      - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
+      - '@Apie\SchemaGenerator\SchemaGenerator'
+      - '@Apie\Core\BoundedContext\BoundedContextHashmap'
+      - '@Apie\Common\ActionDefinitionProvider'
