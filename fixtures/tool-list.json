@@ -70,6 +70,46 @@
             }
         },
         {
+            "name": "get-object-default-user-with-address",
+            "inputSchema": {
+                "type": "object",
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Gets a resource of UserWithAddress with a specific id",
+            "x-definition": "Apie\\Common\\Actions\\GetItemAction",
+            "x-fields": {
+                "get": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress"
+            }
+        },
+        {
+            "name": "get-object-default-order",
+            "inputSchema": {
+                "type": "object",
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Gets a resource of Order with a specific id",
+            "x-definition": "Apie\\Common\\Actions\\GetItemAction",
+            "x-fields": {
+                "get": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\Order"
+            }
+        },
+        {
             "name": "create-object-other-user-with-autoincrement-key",
             "inputSchema": {
                 "type": "object",
@@ -255,6 +295,46 @@
                 "create": true,
                 "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal",
                 "display-form": true
+            }
+        },
+        {
+            "name": "get-object-other-user-with-autoincrement-key",
+            "inputSchema": {
+                "type": "object",
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Gets a resource of UserWithAutoincrementKey with a specific id",
+            "x-definition": "Apie\\Common\\Actions\\GetItemAction",
+            "x-fields": {
+                "get": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAutoincrementKey"
+            }
+        },
+        {
+            "name": "get-object-other-animal",
+            "inputSchema": {
+                "type": "object",
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Gets a resource of Animal with a specific id",
+            "x-definition": "Apie\\Common\\Actions\\GetItemAction",
+            "x-fields": {
+                "get": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal"
             }
         }
     ]
