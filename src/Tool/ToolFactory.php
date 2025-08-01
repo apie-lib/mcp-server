@@ -4,16 +4,24 @@ namespace Apie\McpServer\Tool;
 use Apie\Common\ActionDefinitionProvider;
 use Apie\Common\ActionDefinitions\CreateResourceActionDefinition;
 use Apie\Common\ActionDefinitions\GetResourceActionDefinition;
+use Apie\Common\ActionDefinitions\GetResourceListActionDefinition;
+use Apie\Common\ActionDefinitions\ModifyResourceActionDefinition;
 use Apie\Common\ActionDefinitions\RemoveResourceActionDefinition;
+use Apie\Common\ActionDefinitions\ReplaceResourceActionDefinition;
+use Apie\Common\ActionDefinitions\RunResourceMethodDefinition;
 use Apie\Common\Actions\CreateObjectAction;
 use Apie\Common\Actions\GetItemAction;
+use Apie\Common\Actions\GetListAction;
+use Apie\Common\Actions\ModifyObjectAction;
 use Apie\Common\Actions\RemoveObjectAction;
+use Apie\Common\Actions\RunItemMethodAction;
 use Apie\Core\BoundedContext\BoundedContext;
 use Apie\Core\BoundedContext\BoundedContextHashmap;
+use Apie\Core\Context\ApieContext;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
 use Apie\Core\ContextConstants;
 use Apie\Core\Identifiers\KebabCaseSlug;
-use Apie\HtmlBuilders\ResourceActions\RemoveResourceAction;
+use Apie\Core\Metadata\MetadataFactory;
 use Apie\SchemaGenerator\SchemaGenerator;
 use Mcp\Types\ListToolsResult;
 use Mcp\Types\Tool;
@@ -23,8 +31,12 @@ class ToolFactory
 {
     private const MAPPER = [
         CreateResourceActionDefinition::class => 'createCreateObjectTool',
+        ReplaceResourceActionDefinition::class => 'createCreateObjectTool',
+        ModifyResourceActionDefinition::class => 'createModifyObjectTool',
         GetResourceActionDefinition::class => 'createGetObjectTool',
+        GetResourceListActionDefinition::class => 'createListObjectTool',
         RemoveResourceActionDefinition::class => 'createRemoveObjectTool',
+        RunResourceMethodDefinition::class => 'createObjectMethodCallTool',
     ];
 
     public function __construct(
@@ -78,10 +90,40 @@ class ToolFactory
         throw new \LogicException('Tool "' . $name . '" not found!');
     }
 
-    public function createCreateObjectTool(CreateResourceActionDefinition $definition): Tool
+    public function createObjectMethodCallTool(
+        RunResourceMethodDefinition $definition
+    ) {
+        $class = $definition->getResourceName();
+        $method = $definition->getMethod();
+        $name = 'run-object-'
+            . $definition->getBoundedContextId()->toNative()
+            . '-'
+            . KebabCaseSlug::fromClass($class)
+            . '-method-'
+            . KebabCaseSlug::fromClass($method);
+        $data = json_decode(
+            json_encode($this->schemaGenerator->createMethodSchema($method)->getSerializableData()),
+            true
+        );
+        $tool = new Tool(
+            $name,
+            ToolInputSchema::fromArray(
+                $data
+            ),
+            RunItemMethodAction::getDescription($class, $method)
+        );
+        $tool->{"x-definition"} = RunItemMethodAction::class;
+        $tool->{"x-method-class"} = $method->getDeclaringClass()->name;
+        $tool->{"x-method"} = $method->name;
+        $tool->{"x-fields"} = RunItemMethodAction::getRouteAttributes($class, $method);
+
+        return $tool;
+    }
+
+    public function createCreateObjectTool(CreateResourceActionDefinition|ReplaceResourceActionDefinition $definition): Tool
     {
         $class = $definition->getResourceName();
-        $name = 'create-object-'
+        $name = ($definition instanceof CreateResourceActionDefinition ? 'create-object-' : 'replace-object-')
             . $definition->getBoundedContextId()->toNative()
             . '-'
             . KebabCaseSlug::fromClass($class);
@@ -89,6 +131,11 @@ class ToolFactory
             json_encode($this->schemaGenerator->createSchema($class->name)->getSerializableData()),
             true
         );
+        if ($definition instanceof ReplaceResourceActionDefinition && !isset($data['properties']['id'])) {
+            $data['properties']['id'] = ['type' => 'string'];
+            $data['required'] ??= [];
+            $data['required'][] = 'id';
+        }
         $tool = new Tool(
             $name,
             ToolInputSchema::fromArray(
@@ -98,6 +145,40 @@ class ToolFactory
         );
         $tool->{"x-definition"} = CreateObjectAction::class;
         $tool->{"x-fields"} = CreateObjectAction::getRouteAttributes($class);
+
+        return $tool;
+    }
+
+    public function createModifyObjectTool(ModifyResourceActionDefinition $definition): Tool
+    {
+        $class = $definition->getResourceName();
+        $name = 'modify-object-'
+            . $definition->getBoundedContextId()->toNative()
+            . '-'
+            . KebabCaseSlug::fromClass($class);
+        $data = json_decode(
+            json_encode($this->schemaGenerator->createSchema($class->name)->getSerializableData()),
+            true
+        );
+        $modifiableKeys = MetadataFactory::getModificationMetadata($class, new ApieContext())->getHashmap()->toArray();
+        foreach ($data['properties'] ?? [] as $prop => $value) {
+            if (!isset($modifiableKeys[$prop])) {
+                unset($data['properties'][$prop]);
+            }
+        }
+        if (!isset($data['properties']['id'])) {
+            $data['properties']['id'] = ['type' => 'string'];
+        }
+        $data['required'] = ['id'];
+        $tool = new Tool(
+            $name,
+            ToolInputSchema::fromArray(
+                $data
+            ),
+            ModifyObjectAction::getDescription($class)
+        );
+        $tool->{"x-definition"} = ModifyObjectAction::class;
+        $tool->{"x-fields"} = ModifyObjectAction::getRouteAttributes($class);
 
         return $tool;
     }
@@ -154,6 +235,31 @@ class ToolFactory
         );
         $tool->{"x-definition"} = GetItemAction::class;
         $tool->{"x-fields"} = GetItemAction::getRouteAttributes($class);
+
+        return $tool;
+    }
+
+    public function createListObjectTool(GetResourceListActionDefinition $definition): Tool
+    {
+        $class = $definition->getResourceName();
+        $name = 'all-object-'
+            . $definition->getBoundedContextId()->toNative()
+            . '-'
+            . KebabCaseSlug::fromClass($class);
+        $tool = new Tool(
+            $name,
+            ToolInputSchema::fromArray(
+                [
+                    'type' => 'object',
+                    'properties' => [
+                    ],
+                    'required' => []
+                ]
+            ),
+            GetListAction::getDescription($class)
+        );
+        $tool->{"x-definition"} = GetListAction::class;
+        $tool->{"x-fields"} = GetListAction::getRouteAttributes($class);
 
         return $tool;
     }

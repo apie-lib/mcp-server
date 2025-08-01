@@ -70,6 +70,55 @@
             }
         },
         {
+            "name": "replace-object-default-order",
+            "inputSchema": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "orderLines"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "orderidentifier",
+                        "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$"
+                    },
+                    "optionalTags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "nullable": true,
+                        "uniqueItems": true
+                    },
+                    "orderLines": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "id"
+                            ],
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "format": "orderlineidentifier",
+                                    "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "description": "Creates an instance of Order",
+            "x-definition": "Apie\\Common\\Actions\\CreateObjectAction",
+            "x-fields": {
+                "create": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\Order",
+                "display-form": true
+            }
+        },
+        {
             "name": "get-object-default-user-with-address",
             "inputSchema": {
                 "type": "object",
@@ -107,6 +156,229 @@
             "x-fields": {
                 "get": true,
                 "resourceName": "Apie\\Fixtures\\Entities\\Order"
+            }
+        },
+        {
+            "name": "all-object-default-user-with-address",
+            "inputSchema": {
+                "type": "object",
+                "required": [],
+                "properties": {}
+            },
+            "description": "Gets a list of resource that are an instance of UserWithAddress",
+            "x-definition": "Apie\\Common\\Actions\\GetListAction",
+            "x-fields": {
+                "all": true,
+                "get": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress"
+            }
+        },
+        {
+            "name": "all-object-default-order",
+            "inputSchema": {
+                "type": "object",
+                "required": [],
+                "properties": {}
+            },
+            "description": "Gets a list of resource that are an instance of Order",
+            "x-definition": "Apie\\Common\\Actions\\GetListAction",
+            "x-fields": {
+                "all": true,
+                "get": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\Order"
+            }
+        },
+        {
+            "name": "modify-object-default-user-with-address",
+            "inputSchema": {
+                "type": "object",
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "password": {
+                        "type": "string",
+                        "format": "password",
+                        "pattern": "^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[\\!@#\\$%\\^&\\*\\-_\\+\\.]){1,})[a-zA-Z0-9\\!@#\\$%\\^&\\*\\-_\\+\\.]{6,42}$"
+                    },
+                    "id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Modifies an instance of UserWithAddress",
+            "x-definition": "Apie\\Common\\Actions\\ModifyObjectAction",
+            "x-fields": {
+                "edit": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress",
+                "display-form": true
+            }
+        },
+        {
+            "name": "modify-object-default-order",
+            "inputSchema": {
+                "type": "object",
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "optionalTags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "nullable": true,
+                        "uniqueItems": true
+                    },
+                    "id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Modifies an instance of Order",
+            "x-definition": "Apie\\Common\\Actions\\ModifyObjectAction",
+            "x-fields": {
+                "edit": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\Order",
+                "display-form": true
+            }
+        },
+        {
+            "name": "run-object-default-user-with-address-method-verify-authentication",
+            "inputSchema": {
+                "type": "object",
+                "required": [
+                    "username",
+                    "password"
+                ],
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Runs method verifyAuthentication on a UserWithAddress with a specific id",
+            "x-definition": "Apie\\Common\\Actions\\RunItemMethodAction",
+            "x-method-class": "Apie\\Fixtures\\Entities\\UserWithAddress",
+            "x-method": "verifyAuthentication",
+            "x-fields": {
+                "get": true,
+                "resource-call": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress",
+                "methodClass": "Apie\\Fixtures\\Entities\\UserWithAddress",
+                "methodName": "verifyAuthentication",
+                "display-form": true
+            }
+        },
+        {
+            "name": "run-object-default-order-method-add-order-line",
+            "inputSchema": {
+                "type": "object",
+                "required": [
+                    "orderLines"
+                ],
+                "properties": {
+                    "orderLines": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "id"
+                            ],
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "format": "orderlineidentifier",
+                                    "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "description": "Adds orderLine to Order",
+            "x-definition": "Apie\\Common\\Actions\\RunItemMethodAction",
+            "x-method-class": "Apie\\Fixtures\\Entities\\Order",
+            "x-method": "addOrderLine",
+            "x-fields": {
+                "get": true,
+                "resource-call": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\Order",
+                "methodClass": "Apie\\Fixtures\\Entities\\Order",
+                "methodName": "addOrderLine",
+                "display-form": true
+            }
+        },
+        {
+            "name": "run-object-default-order-method-remove-order-line",
+            "inputSchema": {
+                "type": "object",
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "orderlineidentifier",
+                        "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$"
+                    }
+                }
+            },
+            "description": "Removes orderLine from Order",
+            "x-definition": "Apie\\Common\\Actions\\RunItemMethodAction",
+            "x-method-class": "Apie\\Fixtures\\Entities\\Order",
+            "x-method": "removeOrderLine",
+            "x-fields": {
+                "get": true,
+                "resource-call": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\Order",
+                "methodClass": "Apie\\Fixtures\\Entities\\Order",
+                "methodName": "removeOrderLine",
+                "display-form": true
+            }
+        },
+        {
+            "name": "run-object-default-order-method-provide-allowed-methods",
+            "inputSchema": {
+                "type": "object",
+                "required": [],
+                "properties": {}
+            },
+            "description": "Runs method provideAllowedMethods on a Order with a specific id",
+            "x-definition": "Apie\\Common\\Actions\\RunItemMethodAction",
+            "x-method-class": "Apie\\Fixtures\\Entities\\Order",
+            "x-method": "provideAllowedMethods",
+            "x-fields": {
+                "get": true,
+                "resource-call": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\Order",
+                "methodClass": "Apie\\Fixtures\\Entities\\Order",
+                "methodName": "provideAllowedMethods",
+                "display-form": true
+            }
+        },
+        {
+            "name": "run-object-default-order-method-accept-order",
+            "inputSchema": {
+                "type": "object",
+                "required": [],
+                "properties": {}
+            },
+            "description": "Runs method acceptOrder on a Order with a specific id",
+            "x-definition": "Apie\\Common\\Actions\\RunItemMethodAction",
+            "x-method-class": "Apie\\Fixtures\\Entities\\Order",
+            "x-method": "acceptOrder",
+            "x-fields": {
+                "get": true,
+                "resource-call": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\Order",
+                "methodClass": "Apie\\Fixtures\\Entities\\Order",
+                "methodName": "acceptOrder",
+                "display-form": true
             }
         },
         {
@@ -335,6 +607,180 @@
             "x-fields": {
                 "get": true,
                 "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal"
+            }
+        },
+        {
+            "name": "all-object-other-user-with-autoincrement-key",
+            "inputSchema": {
+                "type": "object",
+                "required": [],
+                "properties": {}
+            },
+            "description": "Gets a list of resource that are an instance of UserWithAutoincrementKey",
+            "x-definition": "Apie\\Common\\Actions\\GetListAction",
+            "x-fields": {
+                "all": true,
+                "get": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAutoincrementKey"
+            }
+        },
+        {
+            "name": "all-object-other-animal",
+            "inputSchema": {
+                "type": "object",
+                "required": [],
+                "properties": {}
+            },
+            "description": "Gets a list of resource that are an instance of Animal",
+            "x-definition": "Apie\\Common\\Actions\\GetListAction",
+            "x-fields": {
+                "all": true,
+                "get": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal"
+            }
+        },
+        {
+            "name": "modify-object-other-user-with-autoincrement-key",
+            "inputSchema": {
+                "type": "object",
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "password": {
+                        "type": "string",
+                        "format": "password",
+                        "pattern": "^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[\\!@#\\$%\\^&\\*\\-_\\+\\.]){1,})[a-zA-Z0-9\\!@#\\$%\\^&\\*\\-_\\+\\.]{6,42}$"
+                    },
+                    "id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Modifies an instance of UserWithAutoincrementKey",
+            "x-definition": "Apie\\Common\\Actions\\ModifyObjectAction",
+            "x-fields": {
+                "edit": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAutoincrementKey",
+                "display-form": true
+            }
+        },
+        {
+            "name": "modify-object-other-animal",
+            "inputSchema": {
+                "type": "object",
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "hasMilk": {
+                        "type": "boolean",
+                        "nullable": false
+                    },
+                    "starving": {
+                        "type": "boolean",
+                        "nullable": false
+                    },
+                    "poisonous": {
+                        "type": "boolean",
+                        "nullable": false
+                    },
+                    "id": {
+                        "type": "string"
+                    }
+                },
+                "oneOf": [
+                    {
+                        "type": "object",
+                        "required": [
+                            "animalType"
+                        ],
+                        "properties": {
+                            "animalType": {
+                                "enum": [
+                                    "cow"
+                                ],
+                                "type": "string",
+                                "nullable": false
+                            },
+                            "id": {
+                                "type": "string",
+                                "format": "animalidentifier",
+                                "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$",
+                                "nullable": true
+                            },
+                            "hasMilk": {
+                                "type": "boolean",
+                                "nullable": false
+                            }
+                        }
+                    },
+                    {
+                        "type": "object",
+                        "required": [
+                            "animalType"
+                        ],
+                        "properties": {
+                            "animalType": {
+                                "enum": [
+                                    "elephant"
+                                ],
+                                "type": "string",
+                                "nullable": false
+                            },
+                            "id": {
+                                "type": "string",
+                                "format": "animalidentifier",
+                                "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$",
+                                "nullable": true
+                            },
+                            "starving": {
+                                "type": "boolean",
+                                "nullable": false
+                            }
+                        }
+                    },
+                    {
+                        "type": "object",
+                        "required": [
+                            "animalType"
+                        ],
+                        "properties": {
+                            "animalType": {
+                                "enum": [
+                                    "fish"
+                                ],
+                                "type": "string",
+                                "nullable": false
+                            },
+                            "id": {
+                                "type": "string",
+                                "format": "animalidentifier",
+                                "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$",
+                                "nullable": true
+                            },
+                            "poisonous": {
+                                "type": "boolean",
+                                "nullable": false
+                            }
+                        }
+                    }
+                ],
+                "discriminator": {
+                    "propertyName": "animalType",
+                    "mapping": {
+                        "cow": "#/components/schemas/Cow-post",
+                        "elephant": "#/components/schemas/Elephant-post",
+                        "fish": "#/components/schemas/Fish-post"
+                    }
+                }
+            },
+            "description": "Modifies an instance of Animal",
+            "x-definition": "Apie\\Common\\Actions\\ModifyObjectAction",
+            "x-fields": {
+                "edit": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal",
+                "display-form": true
             }
         }
     ]
