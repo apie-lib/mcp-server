@@ -12,6 +12,11 @@ use Mcp\Types\JsonRpcMessage;
 class InMemoryTransport implements Transport
 {
     /**
+     * @var array<int, JsonRpcMessage> $written
+     */
+    public array $written = [];
+
+    /**
      * @param array<int, JsonRpcMessage> $messages
      */
     public function __construct(
@@ -43,7 +48,7 @@ class InMemoryTransport implements Transport
         if (!$this->isRunning) {
             throw new StopRunnerException('Transport is not running');
         }
-        $this->messages[] = $message;
+        $this->written[] = $message;
     }
     public function start(): void
     {

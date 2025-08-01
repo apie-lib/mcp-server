@@ -3,6 +3,7 @@ services:
     arguments:
       - '@Apie\McpServer\Factory\RunnerFactoryInterface'
       - '@Apie\McpServer\Tool\ToolFactory'
+      - '@Apie\McpServer\Tool\ToolRunner'
     tags:
       - { name: 'console.command' }
   Apie\McpServer\Factory\RunnerFactoryInterface:
@@ -10,6 +11,7 @@ services:
   Apie\McpServer\Factory\RunnerFactory:
     arguments:
       - '@logger'
+  Apie\McpServer\Tool\ToolRunner:
   Apie\McpServer\Tool\ToolFactory:
     arguments:
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'

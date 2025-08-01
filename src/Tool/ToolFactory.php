@@ -9,8 +9,6 @@ use Apie\Core\BoundedContext\BoundedContextHashmap;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
 use Apie\Core\ContextConstants;
 use Apie\Core\Identifiers\KebabCaseSlug;
-use Apie\Core\Identifiers\PascalCaseSlug;
-use Apie\HtmlBuilders\ResourceActions\CreateResourceAction;
 use Apie\SchemaGenerator\SchemaGenerator;
 use Mcp\Types\ListToolsResult;
 use Mcp\Types\Tool;
@@ -55,10 +53,22 @@ class ToolFactory
         return new ListToolsResult($tools);
     }
 
+    public function findByName(string $name): Tool
+    {
+        $all = $this->createList();
+        foreach ($all->tools as $tool) {
+            if ($tool->name === $name) {
+                return $tool;
+            }
+        }
+
+        throw new \LogicException('Tool "' . $name . '" not found!');
+    }
+
     public function createCreateObjectTool(CreateResourceActionDefinition $definition): Tool
     {
         $class = $definition->getResourceName();
-        $name = 'create-object-' 
+        $name = 'create-object-'
             . $definition->getBoundedContextId()->toNative()
             . '-'
             . KebabCaseSlug::fromClass($class);

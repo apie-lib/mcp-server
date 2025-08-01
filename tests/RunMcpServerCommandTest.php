@@ -2,14 +2,22 @@
 namespace Apie\Tests\McpServer;
 
 use Apie\Common\ActionDefinitionProvider;
+use Apie\Common\ApieFacade;
 use Apie\Common\ContextBuilderFactory;
+use Apie\Common\Interfaces\RouteDefinitionProviderInterface;
+use Apie\Common\Tests\Concerns\ProvidesApieFacade;
+use Apie\Core\BoundedContext\BoundedContextId;
+use Apie\Core\Datalayers\InMemory\InMemoryDatalayer;
 use Apie\Fixtures\BoundedContextFactory;
+use Apie\Fixtures\TestHelpers\TestWithInMemoryDatalayer;
 use Apie\McpServer\Factory\InlineRunnerFactory;
 use Apie\McpServer\RunMcpServerCommand;
 use Apie\McpServer\Tool\ToolFactory;
+use Apie\McpServer\Tool\ToolRunner;
 use Apie\SchemaGenerator\ComponentsBuilderFactory;
 use Apie\SchemaGenerator\SchemaGenerator;
 use Apie\Serializer\DecoderHashmap;
+use Apie\Serializer\Serializer;
 use Mcp\Types\JsonRpcMessage;
 use Mcp\Types\JSONRPCRequest;
 use Mcp\Types\RequestId;
@@ -20,6 +28,8 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class RunMcpServerCommandTest extends TestCase
 {
+    use TestWithInMemoryDatalayer;
+
     private function createRequestParams(array $data): RequestParams
     {
         $res = new RequestParams();
@@ -34,6 +44,13 @@ class RunMcpServerCommandTest extends TestCase
     public function testLegacyToolCall()
     {
         $hashmap = BoundedContextFactory::createHashmapWithMultipleContexts();
+        $contextBuilder = ContextBuilderFactory::create($hashmap, DecoderHashmap::create());
+        $apieFacade = new ApieFacade(
+            $this->createMock(RouteDefinitionProviderInterface::class),
+            $hashmap,
+            Serializer::create(),
+            $this->givenAnInMemoryDataLayer(new BoundedContextId('example'))
+        );
         $testItem = new RunMcpServerCommand(
             new InlineRunnerFactory(
                 new NullLogger(),
@@ -65,7 +82,7 @@ class RunMcpServerCommandTest extends TestCase
                             "2.0",
                             new RequestId('3'),
                             $this->createRequestParams([
-                                'name' => 'shutdown',
+                                'name' => 'create-object-default-user-with-address',
                                 'arguments' => []
                             ]),
                             'tools/call',
@@ -74,10 +91,14 @@ class RunMcpServerCommandTest extends TestCase
                 ]
             ),
             new ToolFactory(
-                ContextBuilderFactory::create($hashmap, DecoderHashmap::create()),
+                $contextBuilder,
                 new SchemaGenerator(ComponentsBuilderFactory::createComponentsBuilderFactory()),
                 $hashmap,
                 new ActionDefinitionProvider(),
+            ),
+            new ToolRunner(
+                $contextBuilder,
+                $apieFacade
             )
         );
         $tester = new CommandTester($testItem);

@@ -3,9 +3,8 @@ namespace Apie\McpServer;
 
 use Apie\McpServer\Factory\RunnerFactoryInterface;
 use Apie\McpServer\Tool\ToolFactory;
+use Apie\McpServer\Tool\ToolRunner;
 use Mcp\Server\Server;
-use Mcp\Types\CallToolResult;
-use Mcp\Types\TextContent;
 use Symfony\Component\Console\Command\Command;
 
 class RunMcpServerCommand extends \Symfony\Component\Console\Command\Command
@@ -14,7 +13,8 @@ class RunMcpServerCommand extends \Symfony\Component\Console\Command\Command
 
     public function __construct(
         private readonly RunnerFactoryInterface $runnerFactory,
-        private readonly ToolFactory $toolFactory
+        private readonly ToolFactory $toolFactory,
+        private readonly ToolRunner $toolRunner,
     ) {
         parent::__construct();
     }
@@ -35,17 +35,8 @@ class RunMcpServerCommand extends \Symfony\Component\Console\Command\Command
         });
         $server->registerHandler('tools/call', function ($params) {
             $name = $params->name;
-            /*if ($name === 'shutdown') {
-
-                throw new \RuntimeException('Server is shutting down');
-                return new CallToolResult(
-                        content: [new TextContent(
-                            text: "Server is shutting down."
-                        )]
-                    );
-            }*/
-            // Handle other tool calls as needed
-            return new \Mcp\Types\JSONRPCResponse('2.0', $params->id, null);
+            $tool = $this->toolFactory->findByName($name);
+            return $this->toolRunner->run($tool, $params);
         });
 
         $output->writeln('MCP Server is running...');

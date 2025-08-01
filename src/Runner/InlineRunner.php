@@ -11,7 +11,6 @@ use Psr\Log\LoggerInterface;
 
 class InlineRunner extends ServerRunner
 {
-
     /**
      * @param array<int, JsonRpcMessage> $messages
      */

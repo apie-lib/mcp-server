@@ -30,7 +30,7 @@ class ToolFactoryTest extends TestCase
         $actual = $testItem->createCreateObjectTool(new CreateResourceActionDefinition(
             new ReflectionClass(UserWithAutoincrementKey::class),
             new BoundedContextId('other')
-         ));
+        ));
         $this->assertEquals('create-object-other-user-with-autoincrement-key', $actual->name);
     }
 

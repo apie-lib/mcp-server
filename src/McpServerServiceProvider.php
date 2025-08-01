@@ -19,7 +19,8 @@ class McpServerServiceProvider extends ServiceProvider
             function ($app) {
                 return new \Apie\McpServer\RunMcpServerCommand(
                     $app->make(\Apie\McpServer\Factory\RunnerFactoryInterface::class),
-                    $app->make(\Apie\McpServer\Tool\ToolFactory::class)
+                    $app->make(\Apie\McpServer\Tool\ToolFactory::class),
+                    $app->make(\Apie\McpServer\Tool\ToolRunner::class)
                 );
             }
         );
@@ -41,6 +42,14 @@ class McpServerServiceProvider extends ServiceProvider
             function ($app) {
                 return new \Apie\McpServer\Factory\RunnerFactory(
                     $app->make('logger')
+                );
+            }
+        );
+        $this->app->singleton(
+            \Apie\McpServer\Tool\ToolRunner::class,
+            function ($app) {
+                return new \Apie\McpServer\Tool\ToolRunner(
+                
                 );
             }
         );
