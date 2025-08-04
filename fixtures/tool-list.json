@@ -266,6 +266,48 @@
             }
         },
         {
+            "name": "run-global-default-static-action-example-method-secret-code",
+            "inputSchema": {
+                "type": "object",
+                "required": [],
+                "properties": {}
+            },
+            "description": "Calls method secretCode and returns return value.",
+            "x-definition": "Apie\\Common\\Actions\\RunAction",
+            "x-method-class": "Apie\\Fixtures\\Actions\\StaticActionExample",
+            "x-method": "secretCode",
+            "x-fields": {
+                "method-call": true,
+                "serviceClass": "Apie\\Fixtures\\Actions\\StaticActionExample",
+                "methodName": "secretCode",
+                "display-form": true
+            }
+        },
+        {
+            "name": "run-global-default-background-process-example-method-create-background-process",
+            "inputSchema": {
+                "type": "object",
+                "required": [
+                    "payload"
+                ],
+                "properties": {
+                    "payload": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "description": "Calls method createBackgroundProcess and returns return value.",
+            "x-definition": "Apie\\Common\\Actions\\RunAction",
+            "x-method-class": "Apie\\Fixtures\\Actions\\BackgroundProcessExample",
+            "x-method": "createBackgroundProcess",
+            "x-fields": {
+                "method-call": true,
+                "serviceClass": "Apie\\Fixtures\\Actions\\BackgroundProcessExample",
+                "methodName": "createBackgroundProcess",
+                "display-form": true
+            }
+        },
+        {
             "name": "run-object-default-user-with-address-method-verify-authentication",
             "inputSchema": {
                 "type": "object",

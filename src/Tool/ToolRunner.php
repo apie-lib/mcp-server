@@ -39,15 +39,38 @@ class ToolRunner
     private function actionResponseToToolResult(ActionResponse $input): CallToolResult
     {
         switch ($input->status) {
-            case ActionResponseStatus::CREATED:
-            case ActionResponseStatus::AUTHORIZATION_ERROR:
             case ActionResponseStatus::CLIENT_ERROR:
-            case ActionResponseStatus::DELETED:
-            case ActionResponseStatus::NOT_FOUND:
+            case ActionResponseStatus::AUTHORIZATION_ERROR:
             case ActionResponseStatus::OUTPUT_ERROR:
             case ActionResponseStatus::PERISTENCE_ERROR:
             case ActionResponseStatus::SERVER_ERROR:
+                return new CallToolResult(
+                    [
+                        new TextContent(json_encode($input->getResultAsNativeData())),
+                    ],
+                    true
+                );
+
+            case ActionResponseStatus::DELETED:
+                return new CallToolResult(
+                    [
+                        new TextContent(json_encode("Resource was deleted correctly.")),
+                    ],
+                    false
+                );
+            case ActionResponseStatus::NOT_FOUND:
+                return new CallToolResult(
+                    [
+                        new TextContent(json_encode("Resource was not found.")),
+                    ],
+                    false
+                );
+            
+            case ActionResponseStatus::CREATED:
             case ActionResponseStatus::SUCCESS:
+                if (isset($input->error)) {
+                    throw $input->error;
+                }
                 return new CallToolResult(
                     [
                         new TextContent(json_encode($input->getResultAsNativeData())),

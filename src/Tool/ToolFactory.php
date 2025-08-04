@@ -8,12 +8,14 @@ use Apie\Common\ActionDefinitions\GetResourceListActionDefinition;
 use Apie\Common\ActionDefinitions\ModifyResourceActionDefinition;
 use Apie\Common\ActionDefinitions\RemoveResourceActionDefinition;
 use Apie\Common\ActionDefinitions\ReplaceResourceActionDefinition;
+use Apie\Common\ActionDefinitions\RunGlobalMethodDefinition;
 use Apie\Common\ActionDefinitions\RunResourceMethodDefinition;
 use Apie\Common\Actions\CreateObjectAction;
 use Apie\Common\Actions\GetItemAction;
 use Apie\Common\Actions\GetListAction;
 use Apie\Common\Actions\ModifyObjectAction;
 use Apie\Common\Actions\RemoveObjectAction;
+use Apie\Common\Actions\RunAction;
 use Apie\Common\Actions\RunItemMethodAction;
 use Apie\Core\BoundedContext\BoundedContext;
 use Apie\Core\BoundedContext\BoundedContextHashmap;
@@ -37,6 +39,7 @@ class ToolFactory
         GetResourceListActionDefinition::class => 'createListObjectTool',
         RemoveResourceActionDefinition::class => 'createRemoveObjectTool',
         RunResourceMethodDefinition::class => 'createObjectMethodCallTool',
+        RunGlobalMethodDefinition::class => 'createGlobalMethodCallTool',
     ];
 
     public function __construct(
@@ -260,6 +263,36 @@ class ToolFactory
         );
         $tool->{"x-definition"} = GetListAction::class;
         $tool->{"x-fields"} = GetListAction::getRouteAttributes($class);
+
+        return $tool;
+    }
+
+    public function createGlobalMethodCallTool(
+        RunGlobalMethodDefinition $definition
+    ) {
+        $method = $definition->getMethod();
+        $class = $method->getDeclaringClass();
+        $name = 'run-global-'
+            . $definition->getBoundedContextId()->toNative()
+            . '-'
+            . KebabCaseSlug::fromClass($class)
+            . '-method-'
+            . KebabCaseSlug::fromClass($method);
+        $data = json_decode(
+            json_encode($this->schemaGenerator->createMethodSchema($method)->getSerializableData()),
+            true
+        );
+        $tool = new Tool(
+            $name,
+            ToolInputSchema::fromArray(
+                $data
+            ),
+            RunAction::getDescription($class, $method)
+        );
+        $tool->{"x-definition"} = RunAction::class;
+        $tool->{"x-method-class"} = $method->getDeclaringClass()->name;
+        $tool->{"x-method"} = $method->name;
+        $tool->{"x-fields"} = RunAction::getRouteAttributes($class, $method);
 
         return $tool;
     }
