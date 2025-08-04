@@ -11,9 +11,11 @@ use Apie\Common\Interfaces\RouteDefinitionProviderInterface;
 use Apie\Core\Attributes\Context;
 use Apie\Core\BoundedContext\BoundedContextId;
 use Apie\Core\ContextConstants;
+use Apie\Core\Exceptions\EntityNotFoundException;
 use Apie\Core\Identifiers\UuidV4;
 use Apie\Fixtures\BoundedContextFactory;
 use Apie\Fixtures\Entities\Order;
+use Apie\Fixtures\Identifiers\OrderIdentifier;
 use Apie\Fixtures\TestHelpers\TestWithInMemoryDatalayer;
 use Apie\McpServer\Tool\ToolRunner;
 use Apie\Serializer\DecoderHashmap;
@@ -21,6 +23,7 @@ use Apie\Serializer\Serializer;
 use Mcp\Types\CallToolResult;
 use Mcp\Types\TextContent;
 use Mcp\Types\Tool;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -76,9 +79,20 @@ class ToolRunnerTest extends TestCase
         $this->assertFalse($result->isError);
     }
 
-    #[Test]
-    public function it_responds_with_access_denied(): void
+    public static function toolProvider(): \Generator
     {
+        yield 'valid response' => [false, '42', 'validResponse'];
+        yield 'permission denied' => [true, 'Action not allowed.', 'noPermissionMethod'];
+        yield 'entity not found error' => [true, 'Resource was not found.', 'notFoundMethod'];
+    }
+
+    #[Test]
+    #[DataProvider('toolProvider')]
+    public function it_responds_with_different_flows(
+        bool $expectedError,
+        string $expectedContent,
+        string $methodName
+    ): void {
         $tool = Tool::fromArray([
             'name' => 'test-tool',
             'description' => 'Test tool',
@@ -92,7 +106,7 @@ class ToolRunnerTest extends TestCase
             'x-fields' => [
                 ContextConstants::APIE_ACTION => RunAction::class,
                 ContextConstants::SERVICE_CLASS => self::class,
-                ContextConstants::METHOD_NAME => 'noPermissionMethod',
+                ContextConstants::METHOD_NAME => $methodName,
                 ContextConstants::BOUNDED_CONTEXT_ID => 'default',
             ],
         ]);
@@ -115,12 +129,22 @@ class ToolRunnerTest extends TestCase
         $this->assertInstanceOf(CallToolResult::class, $result);
         $this->assertCount(1, $result->content);
         $this->assertInstanceOf(TextContent::class, $result->content[0]);
-        $this->assertStringContainsString('Action not allowed.', $result->content[0]->text);
-        $this->assertTrue($result->isError);
+        $this->assertStringContainsString($expectedContent, $result->content[0]->text);
+        $this->assertEquals($expectedError, $result->isError, $expectedError ? 'Error state is on' : 'Error state is off');
     }
 
     public static function noPermissionMethod(#[Context('does-not-exist')] string $ignored): string
     {
         return $ignored;
+    }
+
+    public static function notFoundMethod(): never
+    {
+        throw new EntityNotFoundException(OrderIdentifier::createRandom());
+    }
+
+    public static function validResponse(): int
+    {
+        return 42;
     }
 }

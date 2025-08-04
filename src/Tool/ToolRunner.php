@@ -63,7 +63,7 @@ class ToolRunner
                     [
                         new TextContent(json_encode("Resource was not found.")),
                     ],
-                    false
+                    true
                 );
             
             case ActionResponseStatus::CREATED:
