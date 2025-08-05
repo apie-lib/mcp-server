@@ -27,6 +27,9 @@ class ToolRunner
         $fields[ContextConstants::MCP_SERVER] = true;
         $fields[Tool::class] = true;
         $fields[ContextConstants::RAW_CONTENTS] = $params;
+        if (isset($params['id'])) {
+            $fields[ContextConstants::RESOURCE_ID] = $params['id'];
+        }
         $context = $request
             ? $this->contextBuilder->createFromRequest($request, $fields)
             : $this->contextBuilder->createGeneralContext($fields);

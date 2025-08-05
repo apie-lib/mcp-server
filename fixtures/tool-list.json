@@ -266,6 +266,27 @@
             }
         },
         {
+            "name": "remove-object-default-order",
+            "inputSchema": {
+                "type": "object",
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Removes an instance of Order",
+            "x-definition": "Apie\\Common\\Actions\\RemoveObjectAction",
+            "x-fields": {
+                "edit": true,
+                "resourceName": "Apie\\Fixtures\\Entities\\Order",
+                "display-form": true
+            }
+        },
+        {
             "name": "run-global-default-static-action-example-method-secret-code",
             "inputSchema": {
                 "type": "object",
