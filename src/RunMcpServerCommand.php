@@ -9,14 +9,12 @@ use Symfony\Component\Console\Command\Command;
 
 class RunMcpServerCommand extends \Symfony\Component\Console\Command\Command
 {
-    protected static $defaultName = 'apie:mcp-server';
-
     public function __construct(
         private readonly RunnerFactoryInterface $runnerFactory,
         private readonly ToolFactory $toolFactory,
         private readonly ToolRunner $toolRunner,
     ) {
-        parent::__construct();
+        parent::__construct('apie:mcp-server');
     }
 
     protected function configure()

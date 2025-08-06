@@ -41,7 +41,7 @@ class McpServerServiceProvider extends ServiceProvider
             \Apie\McpServer\Factory\RunnerFactory::class,
             function ($app) {
                 return new \Apie\McpServer\Factory\RunnerFactory(
-                    $app->make('logger')
+                    $app->make(\Psr\Log\LoggerInterface::class)
                 );
             }
         );
@@ -49,7 +49,8 @@ class McpServerServiceProvider extends ServiceProvider
             \Apie\McpServer\Tool\ToolRunner::class,
             function ($app) {
                 return new \Apie\McpServer\Tool\ToolRunner(
-                
+                    $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
+                    $app->make('apie')
                 );
             }
         );

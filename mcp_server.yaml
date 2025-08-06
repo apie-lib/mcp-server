@@ -10,8 +10,11 @@ services:
     alias: Apie\McpServer\Factory\RunnerFactory
   Apie\McpServer\Factory\RunnerFactory:
     arguments:
-      - '@logger'
+      - '@Psr\Log\LoggerInterface'
   Apie\McpServer\Tool\ToolRunner:
+    arguments:
+      - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
+      - '@apie'
   Apie\McpServer\Tool\ToolFactory:
     arguments:
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
