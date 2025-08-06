@@ -10,13 +10,11 @@
                 "properties": {
                     "id": {
                         "type": "string",
-                        "format": "userwithaddressidentifier",
-                        "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$",
-                        "nullable": true
+                        "nullable": true,
+                        "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$"
                     },
                     "password": {
                         "type": "string",
-                        "format": "password",
                         "pattern": "^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[\\!@#\\$%\\^&\\*\\-_\\+\\.]){1,})[a-zA-Z0-9\\!@#\\$%\\^&\\*\\-_\\+\\.]{6,42}$"
                     },
                     "address": {
@@ -27,37 +25,37 @@
                             "zipcode",
                             "city"
                         ],
+                        "description": "Represents an address which can verify if the zipcode is correct with some API call",
                         "properties": {
                             "street": {
-                                "maxLength": 65535,
-                                "minLength": 0,
                                 "type": "string",
-                                "example": "Lorem Ipsum",
-                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database"
+                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database",
+                                "minLength": 0,
+                                "maxLength": 65535,
+                                "example": "Lorem Ipsum"
                             },
                             "streetNumber": {
-                                "maxLength": 65535,
-                                "minLength": 0,
                                 "type": "string",
-                                "example": "Lorem Ipsum",
-                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database"
+                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database",
+                                "minLength": 0,
+                                "maxLength": 65535,
+                                "example": "Lorem Ipsum"
                             },
                             "zipcode": {
-                                "maxLength": 65535,
-                                "minLength": 0,
                                 "type": "string",
-                                "example": "Lorem Ipsum",
-                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database"
+                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database",
+                                "minLength": 0,
+                                "maxLength": 65535,
+                                "example": "Lorem Ipsum"
                             },
                             "city": {
-                                "maxLength": 65535,
-                                "minLength": 0,
                                 "type": "string",
-                                "example": "Lorem Ipsum",
-                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database"
+                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database",
+                                "minLength": 0,
+                                "maxLength": 65535,
+                                "example": "Lorem Ipsum"
                             }
-                        },
-                        "description": "Represents an address which can verify if the zipcode is correct with some API call"
+                        }
                     }
                 }
             },
@@ -80,17 +78,15 @@
                 "properties": {
                     "id": {
                         "type": "string",
-                        "format": "orderidentifier",
                         "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$"
                     },
                     "optionalTags": {
                         "type": "array",
+                        "nullable": true,
                         "items": {
                             "type": "string",
                             "nullable": true
-                        },
-                        "nullable": true,
-                        "uniqueItems": true
+                        }
                     },
                     "orderLines": {
                         "type": "array",
@@ -102,7 +98,6 @@
                             "properties": {
                                 "id": {
                                     "type": "string",
-                                    "format": "orderlineidentifier",
                                     "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$"
                                 }
                             }
@@ -198,7 +193,6 @@
                 "properties": {
                     "password": {
                         "type": "string",
-                        "format": "password",
                         "pattern": "^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[\\!@#\\$%\\^&\\*\\-_\\+\\.]){1,})[a-zA-Z0-9\\!@#\\$%\\^&\\*\\-_\\+\\.]{6,42}$"
                     },
                     "id": {
@@ -224,12 +218,11 @@
                 "properties": {
                     "optionalTags": {
                         "type": "array",
+                        "nullable": true,
                         "items": {
                             "type": "string",
                             "nullable": true
-                        },
-                        "nullable": true,
-                        "uniqueItems": true
+                        }
                     },
                     "id": {
                         "type": "string"
@@ -376,7 +369,6 @@
                             "properties": {
                                 "id": {
                                     "type": "string",
-                                    "format": "orderlineidentifier",
                                     "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$"
                                 }
                             }
@@ -407,7 +399,6 @@
                 "properties": {
                     "id": {
                         "type": "string",
-                        "format": "orderlineidentifier",
                         "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$"
                     }
                 }
@@ -475,7 +466,6 @@
                 "properties": {
                     "password": {
                         "type": "string",
-                        "format": "password",
                         "pattern": "^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[\\!@#\\$%\\^&\\*\\-_\\+\\.]){1,})[a-zA-Z0-9\\!@#\\$%\\^&\\*\\-_\\+\\.]{6,42}$"
                     },
                     "address": {
@@ -486,37 +476,37 @@
                             "zipcode",
                             "city"
                         ],
+                        "description": "Represents an address which can verify if the zipcode is correct with some API call",
                         "properties": {
                             "street": {
-                                "maxLength": 65535,
-                                "minLength": 0,
                                 "type": "string",
-                                "example": "Lorem Ipsum",
-                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database"
+                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database",
+                                "minLength": 0,
+                                "maxLength": 65535,
+                                "example": "Lorem Ipsum"
                             },
                             "streetNumber": {
-                                "maxLength": 65535,
-                                "minLength": 0,
                                 "type": "string",
-                                "example": "Lorem Ipsum",
-                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database"
+                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database",
+                                "minLength": 0,
+                                "maxLength": 65535,
+                                "example": "Lorem Ipsum"
                             },
                             "zipcode": {
-                                "maxLength": 65535,
-                                "minLength": 0,
                                 "type": "string",
-                                "example": "Lorem Ipsum",
-                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database"
+                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database",
+                                "minLength": 0,
+                                "maxLength": 65535,
+                                "example": "Lorem Ipsum"
                             },
                             "city": {
-                                "maxLength": 65535,
-                                "minLength": 0,
                                 "type": "string",
-                                "example": "Lorem Ipsum",
-                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database"
+                                "description": "Any text with a maximum length of 65535 characters that fit in a TEXT field in a database",
+                                "minLength": 0,
+                                "maxLength": 65535,
+                                "example": "Lorem Ipsum"
                             }
-                        },
-                        "description": "Represents an address which can verify if the zipcode is correct with some API call"
+                        }
                     }
                 }
             },
@@ -542,9 +532,8 @@
                     },
                     "id": {
                         "type": "string",
-                        "format": "animalidentifier",
-                        "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$",
-                        "nullable": true
+                        "nullable": true,
+                        "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$"
                     },
                     "hasMilk": {
                         "type": "boolean",
@@ -559,7 +548,7 @@
                         "nullable": false
                     }
                 },
-                "oneOf": [
+                "anyOf": [
                     {
                         "type": "object",
                         "required": [
@@ -567,17 +556,17 @@
                         ],
                         "properties": {
                             "animalType": {
+                                "type": "string",
+                                "nullable": false,
                                 "enum": [
                                     "cow"
                                 ],
-                                "type": "string",
-                                "nullable": false
+                                "format": "enum"
                             },
                             "id": {
                                 "type": "string",
-                                "format": "animalidentifier",
-                                "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$",
-                                "nullable": true
+                                "nullable": true,
+                                "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$"
                             },
                             "hasMilk": {
                                 "type": "boolean",
@@ -592,17 +581,17 @@
                         ],
                         "properties": {
                             "animalType": {
+                                "type": "string",
+                                "nullable": false,
                                 "enum": [
                                     "elephant"
                                 ],
-                                "type": "string",
-                                "nullable": false
+                                "format": "enum"
                             },
                             "id": {
                                 "type": "string",
-                                "format": "animalidentifier",
-                                "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$",
-                                "nullable": true
+                                "nullable": true,
+                                "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$"
                             },
                             "starving": {
                                 "type": "boolean",
@@ -617,17 +606,17 @@
                         ],
                         "properties": {
                             "animalType": {
+                                "type": "string",
+                                "nullable": false,
                                 "enum": [
                                     "fish"
                                 ],
-                                "type": "string",
-                                "nullable": false
+                                "format": "enum"
                             },
                             "id": {
                                 "type": "string",
-                                "format": "animalidentifier",
-                                "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$",
-                                "nullable": true
+                                "nullable": true,
+                                "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$"
                             },
                             "poisonous": {
                                 "type": "boolean",
@@ -635,15 +624,7 @@
                             }
                         }
                     }
-                ],
-                "discriminator": {
-                    "propertyName": "animalType",
-                    "mapping": {
-                        "cow": "#/components/schemas/Cow-post",
-                        "elephant": "#/components/schemas/Elephant-post",
-                        "fish": "#/components/schemas/Fish-post"
-                    }
-                }
+                ]
             },
             "description": "Creates an instance of Animal",
             "x-definition": "Apie\\Common\\Actions\\CreateObjectAction",
@@ -733,7 +714,6 @@
                 "properties": {
                     "password": {
                         "type": "string",
-                        "format": "password",
                         "pattern": "^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[\\!@#\\$%\\^&\\*\\-_\\+\\.]){1,})[a-zA-Z0-9\\!@#\\$%\\^&\\*\\-_\\+\\.]{6,42}$"
                     },
                     "id": {
@@ -773,7 +753,7 @@
                         "type": "string"
                     }
                 },
-                "oneOf": [
+                "anyOf": [
                     {
                         "type": "object",
                         "required": [
@@ -781,17 +761,17 @@
                         ],
                         "properties": {
                             "animalType": {
+                                "type": "string",
+                                "nullable": false,
                                 "enum": [
                                     "cow"
                                 ],
-                                "type": "string",
-                                "nullable": false
+                                "format": "enum"
                             },
                             "id": {
                                 "type": "string",
-                                "format": "animalidentifier",
-                                "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$",
-                                "nullable": true
+                                "nullable": true,
+                                "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$"
                             },
                             "hasMilk": {
                                 "type": "boolean",
@@ -806,17 +786,17 @@
                         ],
                         "properties": {
                             "animalType": {
+                                "type": "string",
+                                "nullable": false,
                                 "enum": [
                                     "elephant"
                                 ],
-                                "type": "string",
-                                "nullable": false
+                                "format": "enum"
                             },
                             "id": {
                                 "type": "string",
-                                "format": "animalidentifier",
-                                "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$",
-                                "nullable": true
+                                "nullable": true,
+                                "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$"
                             },
                             "starving": {
                                 "type": "boolean",
@@ -831,17 +811,17 @@
                         ],
                         "properties": {
                             "animalType": {
+                                "type": "string",
+                                "nullable": false,
                                 "enum": [
                                     "fish"
                                 ],
-                                "type": "string",
-                                "nullable": false
+                                "format": "enum"
                             },
                             "id": {
                                 "type": "string",
-                                "format": "animalidentifier",
-                                "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$",
-                                "nullable": true
+                                "nullable": true,
+                                "pattern": "^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$"
                             },
                             "poisonous": {
                                 "type": "boolean",
@@ -849,15 +829,7 @@
                             }
                         }
                     }
-                ],
-                "discriminator": {
-                    "propertyName": "animalType",
-                    "mapping": {
-                        "cow": "#/components/schemas/Cow-post",
-                        "elephant": "#/components/schemas/Elephant-post",
-                        "fish": "#/components/schemas/Fish-post"
-                    }
-                }
+                ]
             },
             "description": "Modifies an instance of Animal",
             "x-definition": "Apie\\Common\\Actions\\ModifyObjectAction",

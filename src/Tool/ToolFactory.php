@@ -31,6 +31,24 @@ use Mcp\Types\ToolInputSchema;
 
 class ToolFactory
 {
+    private const ALLOWED_FIELD_NAMES = [
+        'required',
+        'title',
+        'description',
+        'nullable',
+        'minItems',
+        'maxItems',
+        'minProperties',
+        'maxProperties',
+        'minLength',
+        'maxLength',
+        'pattern',
+        'example',
+        'default',
+        'minimum',
+        'maximum'
+    ];
+
     private const MAPPER = [
         CreateResourceActionDefinition::class => 'createCreateObjectTool',
         ReplaceResourceActionDefinition::class => 'createCreateObjectTool',
@@ -101,7 +119,7 @@ class ToolFactory
         $name = 'run-object-'
             . $definition->getBoundedContextId()->toNative()
             . '-'
-            . KebabCaseSlug::fromClass($class)
+            . KebabCaseSlug::fromClass($method->getDeclaringClass())
             . '-method-'
             . KebabCaseSlug::fromClass($method);
         $data = json_decode(
@@ -110,7 +128,7 @@ class ToolFactory
         );
         $tool = new Tool(
             $name,
-            ToolInputSchema::fromArray(
+            $this->toToolInputSchema(
                 $data
             ),
             RunItemMethodAction::getDescription($class, $method)
@@ -121,6 +139,72 @@ class ToolFactory
         $tool->{"x-fields"} = RunItemMethodAction::getRouteAttributes($class, $method);
 
         return $tool;
+    }
+
+    /**
+     * @see https://ai.google.dev/api/caching#Schema
+     * @param array<string, mixed> $property
+     * @return array<string, mixed>
+     */
+    private function filterProperty(array $property): array
+    {
+        $filtered = [
+            'type' => $property['type'] ?? 'object',
+        ];
+        foreach (self::ALLOWED_FIELD_NAMES as $fieldName) {
+            if (isset($property[$fieldName])) {
+                $filtered[$fieldName] = $property[$fieldName];
+            }
+        }
+        if (isset($property['format']) && $property['format'] === 'date-time') {
+            $filtered['format'] = 'date-time';
+        }
+        if (isset($property['enum'])) {
+            $filtered['enum'] = $property['enum'];
+            $filtered['format'] = 'enum';
+        }
+
+        if ($filtered['type'] === 'object') {
+            $filtered['properties'] = [];
+            foreach ($property['properties'] ?? [] as $key => $subProperty) {
+                $filtered['properties'][$key] = $this->filterProperty($subProperty);
+            }
+        }
+        if ($property['type'] === 'array' && isset($property['items'])) {
+            $filtered['items'] = $this->filterProperty($property['items'] ?? []);
+        }
+        if (isset($property['anyOf'])) {
+            $filtered['anyOf'] = [];
+            foreach ($property['anyOf'] as $key => $subProperty) {
+                $filtered['anyOf'][$key] = $this->filterProperty($subProperty);
+            }
+        } else if(isset($property['oneOf'])) {
+            $filtered['anyOf'] = [];
+            foreach ($property['oneOf'] as $key => $subProperty) {
+                $filtered['anyOf'][$key] = $this->filterProperty($subProperty);
+            }
+        } else if(isset($property['allOf'])) {
+            $filtered['anyOf'] = [];
+            foreach ($property['allOf'] as $key => $subProperty) {
+                $filtered['anyOf'][$key] = $this->filterProperty($subProperty);
+            }
+        }
+
+        return $filtered;
+    }
+
+    /**
+     * Gemini API is quite strict what it supports and our JSON schema is too accurate.
+     * We have to strip details because of it.
+     * 
+     * @param array<string, mixed> $input
+     */
+    public function toToolInputSchema(array $input): ToolInputSchema
+    {
+        $filtered = $this->filterProperty($input);
+        return ToolInputSchema::fromArray(
+            $filtered
+        );
     }
 
     public function createCreateObjectTool(CreateResourceActionDefinition|ReplaceResourceActionDefinition $definition): Tool
@@ -141,9 +225,7 @@ class ToolFactory
         }
         $tool = new Tool(
             $name,
-            ToolInputSchema::fromArray(
-                $data
-            ),
+            $this->toToolInputSchema($data),
             CreateObjectAction::getDescription($class)
         );
         $tool->{"x-definition"} = CreateObjectAction::class;
@@ -173,11 +255,10 @@ class ToolFactory
             $data['properties']['id'] = ['type' => 'string'];
         }
         $data['required'] = ['id'];
+
         $tool = new Tool(
             $name,
-            ToolInputSchema::fromArray(
-                $data
-            ),
+            $this->toToolInputSchema($data),
             ModifyObjectAction::getDescription($class)
         );
         $tool->{"x-definition"} = ModifyObjectAction::class;
@@ -195,7 +276,7 @@ class ToolFactory
             . KebabCaseSlug::fromClass($class);
         $tool = new Tool(
             $name,
-            ToolInputSchema::fromArray(
+            $this->toToolInputSchema(
                 [
                     'type' => 'object',
                     'properties' => [
@@ -223,7 +304,7 @@ class ToolFactory
             . KebabCaseSlug::fromClass($class);
         $tool = new Tool(
             $name,
-            ToolInputSchema::fromArray(
+            $this->toToolInputSchema(
                 [
                     'type' => 'object',
                     'properties' => [
@@ -251,7 +332,7 @@ class ToolFactory
             . KebabCaseSlug::fromClass($class);
         $tool = new Tool(
             $name,
-            ToolInputSchema::fromArray(
+            $this->toToolInputSchema(
                 [
                     'type' => 'object',
                     'properties' => [
@@ -284,7 +365,7 @@ class ToolFactory
         );
         $tool = new Tool(
             $name,
-            ToolInputSchema::fromArray(
+            $this->toToolInputSchema(
                 $data
             ),
             RunAction::getDescription($class, $method)
