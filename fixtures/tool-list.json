@@ -60,11 +60,13 @@
                 }
             },
             "description": "Creates an instance of UserWithAddress",
-            "x-definition": "Apie\\Common\\Actions\\CreateObjectAction",
-            "x-fields": {
-                "create": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress",
-                "display-form": true
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\CreateObjectAction",
+                "x-fields": {
+                    "create": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress",
+                    "display-form": true
+                }
             }
         },
         {
@@ -106,11 +108,13 @@
                 }
             },
             "description": "Creates an instance of Order",
-            "x-definition": "Apie\\Common\\Actions\\CreateObjectAction",
-            "x-fields": {
-                "create": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\Order",
-                "display-form": true
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\CreateObjectAction",
+                "x-fields": {
+                    "create": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\Order",
+                    "display-form": true
+                }
             }
         },
         {
@@ -127,10 +131,12 @@
                 }
             },
             "description": "Gets a resource of UserWithAddress with a specific id",
-            "x-definition": "Apie\\Common\\Actions\\GetItemAction",
-            "x-fields": {
-                "get": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress"
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\GetItemAction",
+                "x-fields": {
+                    "get": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress"
+                }
             }
         },
         {
@@ -147,10 +153,12 @@
                 }
             },
             "description": "Gets a resource of Order with a specific id",
-            "x-definition": "Apie\\Common\\Actions\\GetItemAction",
-            "x-fields": {
-                "get": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\Order"
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\GetItemAction",
+                "x-fields": {
+                    "get": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\Order"
+                }
             }
         },
         {
@@ -161,11 +169,13 @@
                 "properties": {}
             },
             "description": "Gets a list of resource that are an instance of UserWithAddress",
-            "x-definition": "Apie\\Common\\Actions\\GetListAction",
-            "x-fields": {
-                "all": true,
-                "get": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress"
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\GetListAction",
+                "x-fields": {
+                    "all": true,
+                    "get": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress"
+                }
             }
         },
         {
@@ -176,11 +186,13 @@
                 "properties": {}
             },
             "description": "Gets a list of resource that are an instance of Order",
-            "x-definition": "Apie\\Common\\Actions\\GetListAction",
-            "x-fields": {
-                "all": true,
-                "get": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\Order"
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\GetListAction",
+                "x-fields": {
+                    "all": true,
+                    "get": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\Order"
+                }
             }
         },
         {
@@ -201,11 +213,13 @@
                 }
             },
             "description": "Modifies an instance of UserWithAddress",
-            "x-definition": "Apie\\Common\\Actions\\ModifyObjectAction",
-            "x-fields": {
-                "edit": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress",
-                "display-form": true
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\ModifyObjectAction",
+                "x-fields": {
+                    "edit": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress",
+                    "display-form": true
+                }
             }
         },
         {
@@ -230,11 +244,13 @@
                 }
             },
             "description": "Modifies an instance of Order",
-            "x-definition": "Apie\\Common\\Actions\\ModifyObjectAction",
-            "x-fields": {
-                "edit": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\Order",
-                "display-form": true
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\ModifyObjectAction",
+                "x-fields": {
+                    "edit": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\Order",
+                    "display-form": true
+                }
             }
         },
         {
@@ -251,11 +267,13 @@
                 }
             },
             "description": "Removes an instance of UserWithAddress",
-            "x-definition": "Apie\\Common\\Actions\\RemoveObjectAction",
-            "x-fields": {
-                "edit": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress",
-                "display-form": true
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\RemoveObjectAction",
+                "x-fields": {
+                    "edit": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress",
+                    "display-form": true
+                }
             }
         },
         {
@@ -272,11 +290,13 @@
                 }
             },
             "description": "Removes an instance of Order",
-            "x-definition": "Apie\\Common\\Actions\\RemoveObjectAction",
-            "x-fields": {
-                "edit": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\Order",
-                "display-form": true
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\RemoveObjectAction",
+                "x-fields": {
+                    "edit": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\Order",
+                    "display-form": true
+                }
             }
         },
         {
@@ -287,14 +307,16 @@
                 "properties": {}
             },
             "description": "Calls method secretCode and returns return value.",
-            "x-definition": "Apie\\Common\\Actions\\RunAction",
-            "x-method-class": "Apie\\Fixtures\\Actions\\StaticActionExample",
-            "x-method": "secretCode",
-            "x-fields": {
-                "method-call": true,
-                "serviceClass": "Apie\\Fixtures\\Actions\\StaticActionExample",
-                "methodName": "secretCode",
-                "display-form": true
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\RunAction",
+                "x-method-class": "Apie\\Fixtures\\Actions\\StaticActionExample",
+                "x-method": "secretCode",
+                "x-fields": {
+                    "method-call": true,
+                    "serviceClass": "Apie\\Fixtures\\Actions\\StaticActionExample",
+                    "methodName": "secretCode",
+                    "display-form": true
+                }
             }
         },
         {
@@ -311,14 +333,16 @@
                 }
             },
             "description": "Calls method createBackgroundProcess and returns return value.",
-            "x-definition": "Apie\\Common\\Actions\\RunAction",
-            "x-method-class": "Apie\\Fixtures\\Actions\\BackgroundProcessExample",
-            "x-method": "createBackgroundProcess",
-            "x-fields": {
-                "method-call": true,
-                "serviceClass": "Apie\\Fixtures\\Actions\\BackgroundProcessExample",
-                "methodName": "createBackgroundProcess",
-                "display-form": true
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\RunAction",
+                "x-method-class": "Apie\\Fixtures\\Actions\\BackgroundProcessExample",
+                "x-method": "createBackgroundProcess",
+                "x-fields": {
+                    "method-call": true,
+                    "serviceClass": "Apie\\Fixtures\\Actions\\BackgroundProcessExample",
+                    "methodName": "createBackgroundProcess",
+                    "display-form": true
+                }
             }
         },
         {
@@ -339,16 +363,18 @@
                 }
             },
             "description": "Runs method verifyAuthentication on a UserWithAddress with a specific id",
-            "x-definition": "Apie\\Common\\Actions\\RunItemMethodAction",
-            "x-method-class": "Apie\\Fixtures\\Entities\\UserWithAddress",
-            "x-method": "verifyAuthentication",
-            "x-fields": {
-                "get": true,
-                "resource-call": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress",
-                "methodClass": "Apie\\Fixtures\\Entities\\UserWithAddress",
-                "methodName": "verifyAuthentication",
-                "display-form": true
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\RunItemMethodAction",
+                "x-method-class": "Apie\\Fixtures\\Entities\\UserWithAddress",
+                "x-method": "verifyAuthentication",
+                "x-fields": {
+                    "get": true,
+                    "resource-call": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress",
+                    "methodClass": "Apie\\Fixtures\\Entities\\UserWithAddress",
+                    "methodName": "verifyAuthentication",
+                    "display-form": true
+                }
             }
         },
         {
@@ -377,16 +403,18 @@
                 }
             },
             "description": "Adds orderLine to Order",
-            "x-definition": "Apie\\Common\\Actions\\RunItemMethodAction",
-            "x-method-class": "Apie\\Fixtures\\Entities\\Order",
-            "x-method": "addOrderLine",
-            "x-fields": {
-                "get": true,
-                "resource-call": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\Order",
-                "methodClass": "Apie\\Fixtures\\Entities\\Order",
-                "methodName": "addOrderLine",
-                "display-form": true
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\RunItemMethodAction",
+                "x-method-class": "Apie\\Fixtures\\Entities\\Order",
+                "x-method": "addOrderLine",
+                "x-fields": {
+                    "get": true,
+                    "resource-call": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\Order",
+                    "methodClass": "Apie\\Fixtures\\Entities\\Order",
+                    "methodName": "addOrderLine",
+                    "display-form": true
+                }
             }
         },
         {
@@ -404,16 +432,18 @@
                 }
             },
             "description": "Removes orderLine from Order",
-            "x-definition": "Apie\\Common\\Actions\\RunItemMethodAction",
-            "x-method-class": "Apie\\Fixtures\\Entities\\Order",
-            "x-method": "removeOrderLine",
-            "x-fields": {
-                "get": true,
-                "resource-call": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\Order",
-                "methodClass": "Apie\\Fixtures\\Entities\\Order",
-                "methodName": "removeOrderLine",
-                "display-form": true
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\RunItemMethodAction",
+                "x-method-class": "Apie\\Fixtures\\Entities\\Order",
+                "x-method": "removeOrderLine",
+                "x-fields": {
+                    "get": true,
+                    "resource-call": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\Order",
+                    "methodClass": "Apie\\Fixtures\\Entities\\Order",
+                    "methodName": "removeOrderLine",
+                    "display-form": true
+                }
             }
         },
         {
@@ -424,16 +454,18 @@
                 "properties": {}
             },
             "description": "Runs method provideAllowedMethods on a Order with a specific id",
-            "x-definition": "Apie\\Common\\Actions\\RunItemMethodAction",
-            "x-method-class": "Apie\\Fixtures\\Entities\\Order",
-            "x-method": "provideAllowedMethods",
-            "x-fields": {
-                "get": true,
-                "resource-call": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\Order",
-                "methodClass": "Apie\\Fixtures\\Entities\\Order",
-                "methodName": "provideAllowedMethods",
-                "display-form": true
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\RunItemMethodAction",
+                "x-method-class": "Apie\\Fixtures\\Entities\\Order",
+                "x-method": "provideAllowedMethods",
+                "x-fields": {
+                    "get": true,
+                    "resource-call": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\Order",
+                    "methodClass": "Apie\\Fixtures\\Entities\\Order",
+                    "methodName": "provideAllowedMethods",
+                    "display-form": true
+                }
             }
         },
         {
@@ -444,16 +476,18 @@
                 "properties": {}
             },
             "description": "Runs method acceptOrder on a Order with a specific id",
-            "x-definition": "Apie\\Common\\Actions\\RunItemMethodAction",
-            "x-method-class": "Apie\\Fixtures\\Entities\\Order",
-            "x-method": "acceptOrder",
-            "x-fields": {
-                "get": true,
-                "resource-call": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\Order",
-                "methodClass": "Apie\\Fixtures\\Entities\\Order",
-                "methodName": "acceptOrder",
-                "display-form": true
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\RunItemMethodAction",
+                "x-method-class": "Apie\\Fixtures\\Entities\\Order",
+                "x-method": "acceptOrder",
+                "x-fields": {
+                    "get": true,
+                    "resource-call": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\Order",
+                    "methodClass": "Apie\\Fixtures\\Entities\\Order",
+                    "methodName": "acceptOrder",
+                    "display-form": true
+                }
             }
         },
         {
@@ -511,11 +545,13 @@
                 }
             },
             "description": "Creates an instance of UserWithAutoincrementKey",
-            "x-definition": "Apie\\Common\\Actions\\CreateObjectAction",
-            "x-fields": {
-                "create": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAutoincrementKey",
-                "display-form": true
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\CreateObjectAction",
+                "x-fields": {
+                    "create": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\UserWithAutoincrementKey",
+                    "display-form": true
+                }
             }
         },
         {
@@ -627,11 +663,13 @@
                 ]
             },
             "description": "Creates an instance of Animal",
-            "x-definition": "Apie\\Common\\Actions\\CreateObjectAction",
-            "x-fields": {
-                "create": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal",
-                "display-form": true
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\CreateObjectAction",
+                "x-fields": {
+                    "create": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal",
+                    "display-form": true
+                }
             }
         },
         {
@@ -648,10 +686,12 @@
                 }
             },
             "description": "Gets a resource of UserWithAutoincrementKey with a specific id",
-            "x-definition": "Apie\\Common\\Actions\\GetItemAction",
-            "x-fields": {
-                "get": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAutoincrementKey"
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\GetItemAction",
+                "x-fields": {
+                    "get": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\UserWithAutoincrementKey"
+                }
             }
         },
         {
@@ -668,10 +708,12 @@
                 }
             },
             "description": "Gets a resource of Animal with a specific id",
-            "x-definition": "Apie\\Common\\Actions\\GetItemAction",
-            "x-fields": {
-                "get": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal"
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\GetItemAction",
+                "x-fields": {
+                    "get": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal"
+                }
             }
         },
         {
@@ -682,11 +724,13 @@
                 "properties": {}
             },
             "description": "Gets a list of resource that are an instance of UserWithAutoincrementKey",
-            "x-definition": "Apie\\Common\\Actions\\GetListAction",
-            "x-fields": {
-                "all": true,
-                "get": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAutoincrementKey"
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\GetListAction",
+                "x-fields": {
+                    "all": true,
+                    "get": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\UserWithAutoincrementKey"
+                }
             }
         },
         {
@@ -697,11 +741,13 @@
                 "properties": {}
             },
             "description": "Gets a list of resource that are an instance of Animal",
-            "x-definition": "Apie\\Common\\Actions\\GetListAction",
-            "x-fields": {
-                "all": true,
-                "get": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal"
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\GetListAction",
+                "x-fields": {
+                    "all": true,
+                    "get": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal"
+                }
             }
         },
         {
@@ -722,11 +768,13 @@
                 }
             },
             "description": "Modifies an instance of UserWithAutoincrementKey",
-            "x-definition": "Apie\\Common\\Actions\\ModifyObjectAction",
-            "x-fields": {
-                "edit": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\UserWithAutoincrementKey",
-                "display-form": true
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\ModifyObjectAction",
+                "x-fields": {
+                    "edit": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\UserWithAutoincrementKey",
+                    "display-form": true
+                }
             }
         },
         {
@@ -832,11 +880,13 @@
                 ]
             },
             "description": "Modifies an instance of Animal",
-            "x-definition": "Apie\\Common\\Actions\\ModifyObjectAction",
-            "x-fields": {
-                "edit": true,
-                "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal",
-                "display-form": true
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\ModifyObjectAction",
+                "x-fields": {
+                    "edit": true,
+                    "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal",
+                    "display-form": true
+                }
             }
         }
     ]

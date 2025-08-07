@@ -52,12 +52,14 @@ class ToolRunnerTest extends TestCase
                 ]
             ],
             'parameters' => [],
-            'x-definition' => CreateResourceActionDefinition::class,
-            'x-fields' => [
-                ContextConstants::APIE_ACTION => CreateObjectAction::class,
-                ContextConstants::RESOURCE_NAME => Order::class,
-                ContextConstants::BOUNDED_CONTEXT_ID => 'default',
-            ],
+            '_meta' => [
+                'x-definition' => CreateResourceActionDefinition::class,
+                'x-fields' => [
+                    ContextConstants::APIE_ACTION => CreateObjectAction::class,
+                    ContextConstants::RESOURCE_NAME => Order::class,
+                    ContextConstants::BOUNDED_CONTEXT_ID => 'default',
+                ],
+            ]
         ]);
 
         $hashmap = BoundedContextFactory::createHashmapWithMultipleContexts();
@@ -100,13 +102,15 @@ class ToolRunnerTest extends TestCase
                 ]
             ],
             'parameters' => [],
-            'x-definition' => RemoveResourceActionDefinition::class,
-            'x-fields' => [
-                ContextConstants::APIE_ACTION => RemoveObjectAction::class,
-                ContextConstants::RESOURCE_NAME => Order::class,
-                ContextConstants::BOUNDED_CONTEXT_ID => 'default',
-                LockFactory::class => new LockFactory(new InMemoryStore()),
-            ],
+            '_meta' => [
+                'x-definition' => RemoveResourceActionDefinition::class,
+                'x-fields' => [
+                    ContextConstants::APIE_ACTION => RemoveObjectAction::class,
+                    ContextConstants::RESOURCE_NAME => Order::class,
+                    ContextConstants::BOUNDED_CONTEXT_ID => 'default',
+                    LockFactory::class => new LockFactory(new InMemoryStore()),
+                ],
+            ]
         ]);
 
         $hashmap = BoundedContextFactory::createHashmapWithMultipleContexts();
@@ -159,13 +163,15 @@ class ToolRunnerTest extends TestCase
                 ]
             ],
             'parameters' => [],
-            'x-definition' => RunGlobalMethodDefinition::class,
-            'x-fields' => [
-                ContextConstants::APIE_ACTION => RunAction::class,
-                ContextConstants::SERVICE_CLASS => self::class,
-                ContextConstants::METHOD_NAME => $methodName,
-                ContextConstants::BOUNDED_CONTEXT_ID => 'default',
-            ],
+            '_meta' => [
+                'x-definition' => RunGlobalMethodDefinition::class,
+                'x-fields' => [
+                    ContextConstants::APIE_ACTION => RunAction::class,
+                    ContextConstants::SERVICE_CLASS => self::class,
+                    ContextConstants::METHOD_NAME => $methodName,
+                    ContextConstants::BOUNDED_CONTEXT_ID => 'default',
+                ],
+            ]
         ]);
 
         $hashmap = BoundedContextFactory::createHashmapWithMultipleContexts();

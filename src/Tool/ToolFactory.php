@@ -133,10 +133,12 @@ class ToolFactory
             ),
             RunItemMethodAction::getDescription($class, $method)
         );
-        $tool->{"x-definition"} = RunItemMethodAction::class;
-        $tool->{"x-method-class"} = $method->getDeclaringClass()->name;
-        $tool->{"x-method"} = $method->name;
-        $tool->{"x-fields"} = RunItemMethodAction::getRouteAttributes($class, $method);
+        $tool->_meta = [
+            'x-definition' => RunItemMethodAction::class,
+            'x-method-class' => $method->getDeclaringClass()->name,
+            'x-method' => $method->name,
+            'x-fields' => RunItemMethodAction::getRouteAttributes($class, $method),
+        ];
 
         return $tool;
     }
@@ -178,12 +180,12 @@ class ToolFactory
             foreach ($property['anyOf'] as $key => $subProperty) {
                 $filtered['anyOf'][$key] = $this->filterProperty($subProperty);
             }
-        } else if(isset($property['oneOf'])) {
+        } elseif (isset($property['oneOf'])) {
             $filtered['anyOf'] = [];
             foreach ($property['oneOf'] as $key => $subProperty) {
                 $filtered['anyOf'][$key] = $this->filterProperty($subProperty);
             }
-        } else if(isset($property['allOf'])) {
+        } elseif (isset($property['allOf'])) {
             $filtered['anyOf'] = [];
             foreach ($property['allOf'] as $key => $subProperty) {
                 $filtered['anyOf'][$key] = $this->filterProperty($subProperty);
@@ -196,7 +198,7 @@ class ToolFactory
     /**
      * Gemini API is quite strict what it supports and our JSON schema is too accurate.
      * We have to strip details because of it.
-     * 
+     *
      * @param array<string, mixed> $input
      */
     public function toToolInputSchema(array $input): ToolInputSchema
@@ -228,8 +230,10 @@ class ToolFactory
             $this->toToolInputSchema($data),
             CreateObjectAction::getDescription($class)
         );
-        $tool->{"x-definition"} = CreateObjectAction::class;
-        $tool->{"x-fields"} = CreateObjectAction::getRouteAttributes($class);
+        $tool->_meta = [
+            "x-definition" => CreateObjectAction::class,
+            "x-fields" => CreateObjectAction::getRouteAttributes($class)
+        ];
 
         return $tool;
     }
@@ -261,8 +265,10 @@ class ToolFactory
             $this->toToolInputSchema($data),
             ModifyObjectAction::getDescription($class)
         );
-        $tool->{"x-definition"} = ModifyObjectAction::class;
-        $tool->{"x-fields"} = ModifyObjectAction::getRouteAttributes($class);
+        $tool->_meta = [
+            "x-definition" => ModifyObjectAction::class,
+            "x-fields" => ModifyObjectAction::getRouteAttributes($class)
+        ];
 
         return $tool;
     }
@@ -289,8 +295,10 @@ class ToolFactory
             ),
             RemoveObjectAction::getDescription($class)
         );
-        $tool->{"x-definition"} = RemoveObjectAction::class;
-        $tool->{"x-fields"} = RemoveObjectAction::getRouteAttributes($class);
+        $tool->_meta = [
+            "x-definition" => RemoveObjectAction::class,
+            "x-fields" => RemoveObjectAction::getRouteAttributes($class)
+        ];
 
         return $tool;
     }
@@ -317,8 +325,10 @@ class ToolFactory
             ),
             GetItemAction::getDescription($class)
         );
-        $tool->{"x-definition"} = GetItemAction::class;
-        $tool->{"x-fields"} = GetItemAction::getRouteAttributes($class);
+        $tool->_meta = [
+            "x-definition" => GetItemAction::class,
+            "x-fields" => GetItemAction::getRouteAttributes($class)
+        ];
 
         return $tool;
     }
@@ -342,8 +352,10 @@ class ToolFactory
             ),
             GetListAction::getDescription($class)
         );
-        $tool->{"x-definition"} = GetListAction::class;
-        $tool->{"x-fields"} = GetListAction::getRouteAttributes($class);
+        $tool->_meta = [
+            "x-definition" =>  GetListAction::class,
+            "x-fields" => GetListAction::getRouteAttributes($class)
+        ];
 
         return $tool;
     }
@@ -370,10 +382,12 @@ class ToolFactory
             ),
             RunAction::getDescription($class, $method)
         );
-        $tool->{"x-definition"} = RunAction::class;
-        $tool->{"x-method-class"} = $method->getDeclaringClass()->name;
-        $tool->{"x-method"} = $method->name;
-        $tool->{"x-fields"} = RunAction::getRouteAttributes($class, $method);
+        $tool->_meta = [
+            "x-definition" => RunAction::class,
+            "x-method-class" => $method->getDeclaringClass()->name,
+            "x-method" => $method->name,
+            "x-fields" => RunAction::getRouteAttributes($class, $method),
+        ];
 
         return $tool;
     }

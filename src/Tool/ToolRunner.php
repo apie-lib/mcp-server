@@ -22,8 +22,9 @@ class ToolRunner
     }
     public function run(Tool $tool, array $params, ?ServerRequestInterface $request = null): CallToolResult
     {
-        $action = new ReflectionClass($tool->{"x-definition"});
-        $fields = Utils::toArray($tool->{"x-fields"});
+        $meta = Utils::toArray($tool->_meta);
+        $action = new ReflectionClass($meta["x-definition"]);
+        $fields = Utils::toArray($meta["x-fields"]);
         $fields[ContextConstants::MCP_SERVER] = true;
         $fields[Tool::class] = true;
         $fields[ContextConstants::RAW_CONTENTS] = $params;
