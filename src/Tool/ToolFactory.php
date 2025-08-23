@@ -172,7 +172,7 @@ class ToolFactory
                 $filtered['properties'][$key] = $this->filterProperty($subProperty);
             }
         }
-        if ($property['type'] === 'array' && isset($property['items'])) {
+        if ($filtered['type'] === 'array' && isset($property['items'])) {
             $filtered['items'] = $this->filterProperty($property['items'] ?? []);
         }
         if (isset($property['anyOf'])) {

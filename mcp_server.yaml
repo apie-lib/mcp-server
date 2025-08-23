@@ -21,3 +21,36 @@ services:
       - '@Apie\SchemaGenerator\SchemaGenerator'
       - '@Apie\Core\BoundedContext\BoundedContextHashmap'
       - '@Apie\Common\ActionDefinitionProvider'
+
+  Apie\McpServer\Controllers\RemoteMcpController:
+    arguments:
+      - '@Apie\McpServer\Tool\ToolFactory'
+      - '@Apie\McpServer\Tool\ToolRunner'
+      - '@Psr\Log\LoggerInterface'
+      - '@apie.mcp_store'
+    tags:
+      - { name: 'controller.service_arguments' }
+
+  apie.mcp_store:
+    alias: Mcp\Server\Transport\Http\SessionStoreInterface
+    public: true
+
+  Apie\McpServer\RouteDefinitions\McpServerRouteDefinitionProvider:
+    arguments:
+      - '%apie.remote_mcp_path%'
+    tags:
+      - { name: apie.common.route_definition }
+
+  Mcp\Server\Transport\Http\InMemorySessionStore:
+
+  Mcp\Server\Transport\Http\FileSessionStore:
+    arguments:
+      - '%kernel.cache_dir%/mcp_server_sessions'
+
+  Mcp\Server\Transport\Http\SessionStoreInterface:
+    alias: Mcp\Server\Transport\Http\FileSessionStore
+
+when@test:
+  services:
+    Mcp\Server\Transport\Http\SessionStoreInterface:
+      alias: Mcp\Server\Transport\Http\InMemorySessionStore

@@ -43,8 +43,6 @@ class InlineRunner extends ServerRunner
             $session->registerNotificationHandlers($this->server->getNotificationHandlers());
             $this->logger->info('Server started');
             $session->start();
-
-            
         } catch (StopRunnerException) {
             $this->logger->info('Runner has ended');
             return;
