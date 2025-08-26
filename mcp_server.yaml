@@ -4,6 +4,7 @@ services:
       - '@Apie\McpServer\Factory\RunnerFactoryInterface'
       - '@Apie\McpServer\Tool\ToolFactory'
       - '@Apie\McpServer\Tool\ToolRunner'
+      - '@Psr\Log\LoggerInterface'
     tags:
       - { name: 'console.command' }
   Apie\McpServer\Factory\RunnerFactoryInterface:
@@ -15,6 +16,7 @@ services:
     arguments:
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
       - '@apie'
+      - '@Psr\Log\LoggerInterface'
   Apie\McpServer\Tool\ToolFactory:
     arguments:
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'

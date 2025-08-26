@@ -137,7 +137,11 @@ class ToolFactory
             'x-definition' => RunItemMethodAction::class,
             'x-method-class' => $method->getDeclaringClass()->name,
             'x-method' => $method->name,
-            'x-fields' => RunItemMethodAction::getRouteAttributes($class, $method),
+            'x-fields' => [
+                ...RunItemMethodAction::getRouteAttributes($class, $method),
+                ContextConstants::APIE_ACTION => RunItemMethodAction::class,
+            ],
+            "x-bounded-context-id" => $definition->getBoundedContextId()->toNative(),
         ];
 
         return $tool;
@@ -158,6 +162,7 @@ class ToolFactory
                 $filtered[$fieldName] = $property[$fieldName];
             }
         }
+        // Gemini API only supports date-time and enum as formats and fail with 400 bad request otherwise.
         if (isset($property['format']) && $property['format'] === 'date-time') {
             $filtered['format'] = 'date-time';
         }
@@ -170,6 +175,9 @@ class ToolFactory
             $filtered['properties'] = [];
             foreach ($property['properties'] ?? [] as $key => $subProperty) {
                 $filtered['properties'][$key] = $this->filterProperty($subProperty);
+            }
+            if (empty($filtered['properties'])) {
+                unset($filtered['properties']);
             }
         }
         if ($filtered['type'] === 'array' && isset($property['items'])) {
@@ -232,7 +240,11 @@ class ToolFactory
         );
         $tool->_meta = [
             "x-definition" => CreateObjectAction::class,
-            "x-fields" => CreateObjectAction::getRouteAttributes($class)
+            "x-fields" => [
+                ...CreateObjectAction::getRouteAttributes($class),
+                ContextConstants::APIE_ACTION => CreateObjectAction::class,
+            ],
+            "x-bounded-context-id" => $definition->getBoundedContextId()->toNative(),
         ];
 
         return $tool;
@@ -267,7 +279,11 @@ class ToolFactory
         );
         $tool->_meta = [
             "x-definition" => ModifyObjectAction::class,
-            "x-fields" => ModifyObjectAction::getRouteAttributes($class)
+            "x-fields" => [
+                ...ModifyObjectAction::getRouteAttributes($class),
+                ContextConstants::APIE_ACTION => ModifyObjectAction::class,
+            ],
+            "x-bounded-context-id" => $definition->getBoundedContextId()->toNative(),
         ];
 
         return $tool;
@@ -297,7 +313,11 @@ class ToolFactory
         );
         $tool->_meta = [
             "x-definition" => RemoveObjectAction::class,
-            "x-fields" => RemoveObjectAction::getRouteAttributes($class)
+            "x-fields" => [
+                ...RemoveObjectAction::getRouteAttributes($class),
+                ContextConstants::APIE_ACTION => RemoveObjectAction::class,
+            ],
+            "x-bounded-context-id" => $definition->getBoundedContextId()->toNative(),
         ];
 
         return $tool;
@@ -327,7 +347,11 @@ class ToolFactory
         );
         $tool->_meta = [
             "x-definition" => GetItemAction::class,
-            "x-fields" => GetItemAction::getRouteAttributes($class)
+            "x-fields" => [
+                ...GetItemAction::getRouteAttributes($class),
+                ContextConstants::APIE_ACTION => GetItemAction::class,
+            ],
+            "x-bounded-context-id" => $definition->getBoundedContextId()->toNative(),
         ];
 
         return $tool;
@@ -354,7 +378,11 @@ class ToolFactory
         );
         $tool->_meta = [
             "x-definition" =>  GetListAction::class,
-            "x-fields" => GetListAction::getRouteAttributes($class)
+            "x-fields" => [
+                ...GetListAction::getRouteAttributes($class),
+                ContextConstants::APIE_ACTION => GetListAction::class,
+            ],
+            "x-bounded-context-id" => $definition->getBoundedContextId()->toNative(),
         ];
 
         return $tool;
@@ -386,7 +414,11 @@ class ToolFactory
             "x-definition" => RunAction::class,
             "x-method-class" => $method->getDeclaringClass()->name,
             "x-method" => $method->name,
-            "x-fields" => RunAction::getRouteAttributes($class, $method),
+            "x-fields" => [
+                ...RunAction::getRouteAttributes($class, $method),
+                ContextConstants::APIE_ACTION => RunAction::class,
+            ],
+            "x-bounded-context-id" => $definition->getBoundedContextId()->toNative(),
         ];
 
         return $tool;

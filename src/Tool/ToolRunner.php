@@ -11,6 +11,7 @@ use Mcp\Types\CallToolResult;
 use Mcp\Types\TextContent;
 use Mcp\Types\Tool;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
 use ReflectionClass;
 
 class ToolRunner
@@ -18,26 +19,50 @@ class ToolRunner
     public function __construct(
         private readonly ContextBuilderFactory $contextBuilder,
         private readonly ApieFacade $apieFacade,
+        private readonly LoggerInterface $logger
     ) {
     }
+
     public function run(Tool $tool, array $params, ?ServerRequestInterface $request = null): CallToolResult
     {
-        $meta = Utils::toArray($tool->_meta);
-        $action = new ReflectionClass($meta["x-definition"]);
-        $fields = Utils::toArray($meta["x-fields"]);
-        $fields[ContextConstants::MCP_SERVER] = true;
-        $fields[Tool::class] = true;
-        $fields[ContextConstants::RAW_CONTENTS] = $params;
-        if (isset($params['id'])) {
-            $fields[ContextConstants::RESOURCE_ID] = $params['id'];
+        try {
+            $meta = Utils::toArray($tool->_meta);
+            $action = new ReflectionClass($meta["x-definition"]);
+            $fields = Utils::toArray($meta["x-fields"]);
+            if (isset($meta['x-bounded-context-id'])) {
+                $fields[ContextConstants::BOUNDED_CONTEXT_ID] = $meta['x-bounded-context-id'];
+            }
+            $fields[ContextConstants::MCP_SERVER] = true;
+            $fields[Tool::class] = true;
+            $fields[ContextConstants::RAW_CONTENTS] = $params;
+            if (isset($params['id'])) {
+                $fields[ContextConstants::RESOURCE_ID] = $params['id'];
+            }
+            $context = $request
+                ? $this->contextBuilder->createFromRequest($request, $fields)
+                : $this->contextBuilder->createGeneralContext($fields);
+            $action = $this->apieFacade->createAction($context);
+            /** @var ActionResponse $data */
+            $data = ($action)($context, $params);
+            return $this->actionResponseToToolResult($data);
+        } catch (\Throwable $e) {
+            $this->logger->error('Error while executing tool: "' . $e->getMessage() . '"', [
+                'tool' => $tool,
+                'params' => $params,
+                'exception' => $e,
+            ]);
+            return new CallToolResult(
+                [
+                    new TextContent(json_encode([
+                        'status' => 'error',
+                        'message' => $e->getMessage(),
+                        'exception' => get_class($e),
+                        'trace' => $e->getTraceAsString(),
+                    ])),
+                ],
+                true
+            );
         }
-        $context = $request
-            ? $this->contextBuilder->createFromRequest($request, $fields)
-            : $this->contextBuilder->createGeneralContext($fields);
-        $action = $this->apieFacade->createAction($context);
-        /** @var ActionResponse $data */
-        $data = ($action)($context, $params);
-        return $this->actionResponseToToolResult($data);
     }
 
     private function actionResponseToToolResult(ActionResponse $input): CallToolResult

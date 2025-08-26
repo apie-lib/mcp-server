@@ -29,6 +29,7 @@ use Mcp\Types\Tool;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
 use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Lock\Store\InMemoryStore;
 
@@ -72,7 +73,7 @@ class ToolRunnerTest extends TestCase
             $this->givenAnInMemoryDataLayer(new BoundedContextId('default'))
         );
 
-        $toolRunner = new ToolRunner($contextBuilder, $apieFacade);
+        $toolRunner = new ToolRunner($contextBuilder, $apieFacade, new NullLogger());
 
         $id = UuidV4::createRandom()->toNative();
         // Act
@@ -123,7 +124,7 @@ class ToolRunnerTest extends TestCase
             $this->givenAnInMemoryDataLayer(new BoundedContextId('default'))
         );
 
-        $toolRunner = new ToolRunner($contextBuilder, $apieFacade);
+        $toolRunner = new ToolRunner($contextBuilder, $apieFacade, new NullLogger());
 
         $id = OrderIdentifier::createRandom();
         $order = new Order($id, new OrderLineList());
@@ -184,7 +185,7 @@ class ToolRunnerTest extends TestCase
             $this->givenAnInMemoryDataLayer(new BoundedContextId('default'))
         );
 
-        $toolRunner = new ToolRunner($contextBuilder, $apieFacade);
+        $toolRunner = new ToolRunner($contextBuilder, $apieFacade, new NullLogger());
         // Act
         $result = $toolRunner->run($tool, []);
 

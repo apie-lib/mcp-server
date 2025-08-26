@@ -96,8 +96,10 @@ class RunMcpServerCommandTest extends TestCase
             ),
             new ToolRunner(
                 $contextBuilder,
-                $apieFacade
-            )
+                $apieFacade,
+                new NullLogger(),
+            ),
+            new NullLogger()
         );
         $tester = new CommandTester($testItem);
         $tester->execute([]);

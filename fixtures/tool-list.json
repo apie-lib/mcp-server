@@ -65,8 +65,10 @@
                 "x-fields": {
                     "create": true,
                     "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress",
-                    "display-form": true
-                }
+                    "display-form": true,
+                    "_apie_action": "Apie\\Common\\Actions\\CreateObjectAction"
+                },
+                "x-bounded-context-id": "default"
             }
         },
         {
@@ -113,8 +115,10 @@
                 "x-fields": {
                     "create": true,
                     "resourceName": "Apie\\Fixtures\\Entities\\Order",
-                    "display-form": true
-                }
+                    "display-form": true,
+                    "_apie_action": "Apie\\Common\\Actions\\CreateObjectAction"
+                },
+                "x-bounded-context-id": "default"
             }
         },
         {
@@ -135,8 +139,10 @@
                 "x-definition": "Apie\\Common\\Actions\\GetItemAction",
                 "x-fields": {
                     "get": true,
-                    "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress"
-                }
+                    "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress",
+                    "_apie_action": "Apie\\Common\\Actions\\GetItemAction"
+                },
+                "x-bounded-context-id": "default"
             }
         },
         {
@@ -157,8 +163,10 @@
                 "x-definition": "Apie\\Common\\Actions\\GetItemAction",
                 "x-fields": {
                     "get": true,
-                    "resourceName": "Apie\\Fixtures\\Entities\\Order"
-                }
+                    "resourceName": "Apie\\Fixtures\\Entities\\Order",
+                    "_apie_action": "Apie\\Common\\Actions\\GetItemAction"
+                },
+                "x-bounded-context-id": "default"
             }
         },
         {
@@ -174,8 +182,10 @@
                 "x-fields": {
                     "all": true,
                     "get": true,
-                    "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress"
-                }
+                    "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress",
+                    "_apie_action": "Apie\\Common\\Actions\\GetListAction"
+                },
+                "x-bounded-context-id": "default"
             }
         },
         {
@@ -191,8 +201,10 @@
                 "x-fields": {
                     "all": true,
                     "get": true,
-                    "resourceName": "Apie\\Fixtures\\Entities\\Order"
-                }
+                    "resourceName": "Apie\\Fixtures\\Entities\\Order",
+                    "_apie_action": "Apie\\Common\\Actions\\GetListAction"
+                },
+                "x-bounded-context-id": "default"
             }
         },
         {
@@ -218,8 +230,10 @@
                 "x-fields": {
                     "edit": true,
                     "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress",
-                    "display-form": true
-                }
+                    "display-form": true,
+                    "_apie_action": "Apie\\Common\\Actions\\ModifyObjectAction"
+                },
+                "x-bounded-context-id": "default"
             }
         },
         {
@@ -249,8 +263,10 @@
                 "x-fields": {
                     "edit": true,
                     "resourceName": "Apie\\Fixtures\\Entities\\Order",
-                    "display-form": true
-                }
+                    "display-form": true,
+                    "_apie_action": "Apie\\Common\\Actions\\ModifyObjectAction"
+                },
+                "x-bounded-context-id": "default"
             }
         },
         {
@@ -272,8 +288,10 @@
                 "x-fields": {
                     "edit": true,
                     "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress",
-                    "display-form": true
-                }
+                    "display-form": true,
+                    "_apie_action": "Apie\\Common\\Actions\\RemoveObjectAction"
+                },
+                "x-bounded-context-id": "default"
             }
         },
         {
@@ -295,8 +313,10 @@
                 "x-fields": {
                     "edit": true,
                     "resourceName": "Apie\\Fixtures\\Entities\\Order",
-                    "display-form": true
-                }
+                    "display-form": true,
+                    "_apie_action": "Apie\\Common\\Actions\\RemoveObjectAction"
+                },
+                "x-bounded-context-id": "default"
             }
         },
         {
@@ -315,8 +335,10 @@
                     "method-call": true,
                     "serviceClass": "Apie\\Fixtures\\Actions\\StaticActionExample",
                     "methodName": "secretCode",
-                    "display-form": true
-                }
+                    "display-form": true,
+                    "_apie_action": "Apie\\Common\\Actions\\RunAction"
+                },
+                "x-bounded-context-id": "default"
             }
         },
         {
@@ -341,8 +363,10 @@
                     "method-call": true,
                     "serviceClass": "Apie\\Fixtures\\Actions\\BackgroundProcessExample",
                     "methodName": "createBackgroundProcess",
-                    "display-form": true
-                }
+                    "display-form": true,
+                    "_apie_action": "Apie\\Common\\Actions\\RunAction"
+                },
+                "x-bounded-context-id": "default"
             }
         },
         {
@@ -373,8 +397,10 @@
                     "resourceName": "Apie\\Fixtures\\Entities\\UserWithAddress",
                     "methodClass": "Apie\\Fixtures\\Entities\\UserWithAddress",
                     "methodName": "verifyAuthentication",
-                    "display-form": true
-                }
+                    "display-form": true,
+                    "_apie_action": "Apie\\Common\\Actions\\RunItemMethodAction"
+                },
+                "x-bounded-context-id": "default"
             }
         },
         {
@@ -413,8 +439,10 @@
                     "resourceName": "Apie\\Fixtures\\Entities\\Order",
                     "methodClass": "Apie\\Fixtures\\Entities\\Order",
                     "methodName": "addOrderLine",
-                    "display-form": true
-                }
+                    "display-form": true,
+                    "_apie_action": "Apie\\Common\\Actions\\RunItemMethodAction"
+                },
+                "x-bounded-context-id": "default"
             }
         },
         {
@@ -442,8 +470,10 @@
                     "resourceName": "Apie\\Fixtures\\Entities\\Order",
                     "methodClass": "Apie\\Fixtures\\Entities\\Order",
                     "methodName": "removeOrderLine",
-                    "display-form": true
-                }
+                    "display-form": true,
+                    "_apie_action": "Apie\\Common\\Actions\\RunItemMethodAction"
+                },
+                "x-bounded-context-id": "default"
             }
         },
         {
@@ -464,8 +494,10 @@
                     "resourceName": "Apie\\Fixtures\\Entities\\Order",
                     "methodClass": "Apie\\Fixtures\\Entities\\Order",
                     "methodName": "provideAllowedMethods",
-                    "display-form": true
-                }
+                    "display-form": true,
+                    "_apie_action": "Apie\\Common\\Actions\\RunItemMethodAction"
+                },
+                "x-bounded-context-id": "default"
             }
         },
         {
@@ -486,8 +518,10 @@
                     "resourceName": "Apie\\Fixtures\\Entities\\Order",
                     "methodClass": "Apie\\Fixtures\\Entities\\Order",
                     "methodName": "acceptOrder",
-                    "display-form": true
-                }
+                    "display-form": true,
+                    "_apie_action": "Apie\\Common\\Actions\\RunItemMethodAction"
+                },
+                "x-bounded-context-id": "default"
             }
         },
         {
@@ -550,8 +584,10 @@
                 "x-fields": {
                     "create": true,
                     "resourceName": "Apie\\Fixtures\\Entities\\UserWithAutoincrementKey",
-                    "display-form": true
-                }
+                    "display-form": true,
+                    "_apie_action": "Apie\\Common\\Actions\\CreateObjectAction"
+                },
+                "x-bounded-context-id": "other"
             }
         },
         {
@@ -668,8 +704,10 @@
                 "x-fields": {
                     "create": true,
                     "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal",
-                    "display-form": true
-                }
+                    "display-form": true,
+                    "_apie_action": "Apie\\Common\\Actions\\CreateObjectAction"
+                },
+                "x-bounded-context-id": "other"
             }
         },
         {
@@ -690,8 +728,10 @@
                 "x-definition": "Apie\\Common\\Actions\\GetItemAction",
                 "x-fields": {
                     "get": true,
-                    "resourceName": "Apie\\Fixtures\\Entities\\UserWithAutoincrementKey"
-                }
+                    "resourceName": "Apie\\Fixtures\\Entities\\UserWithAutoincrementKey",
+                    "_apie_action": "Apie\\Common\\Actions\\GetItemAction"
+                },
+                "x-bounded-context-id": "other"
             }
         },
         {
@@ -712,8 +752,10 @@
                 "x-definition": "Apie\\Common\\Actions\\GetItemAction",
                 "x-fields": {
                     "get": true,
-                    "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal"
-                }
+                    "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal",
+                    "_apie_action": "Apie\\Common\\Actions\\GetItemAction"
+                },
+                "x-bounded-context-id": "other"
             }
         },
         {
@@ -729,8 +771,10 @@
                 "x-fields": {
                     "all": true,
                     "get": true,
-                    "resourceName": "Apie\\Fixtures\\Entities\\UserWithAutoincrementKey"
-                }
+                    "resourceName": "Apie\\Fixtures\\Entities\\UserWithAutoincrementKey",
+                    "_apie_action": "Apie\\Common\\Actions\\GetListAction"
+                },
+                "x-bounded-context-id": "other"
             }
         },
         {
@@ -746,8 +790,10 @@
                 "x-fields": {
                     "all": true,
                     "get": true,
-                    "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal"
-                }
+                    "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal",
+                    "_apie_action": "Apie\\Common\\Actions\\GetListAction"
+                },
+                "x-bounded-context-id": "other"
             }
         },
         {
@@ -773,8 +819,10 @@
                 "x-fields": {
                     "edit": true,
                     "resourceName": "Apie\\Fixtures\\Entities\\UserWithAutoincrementKey",
-                    "display-form": true
-                }
+                    "display-form": true,
+                    "_apie_action": "Apie\\Common\\Actions\\ModifyObjectAction"
+                },
+                "x-bounded-context-id": "other"
             }
         },
         {
@@ -885,8 +933,10 @@
                 "x-fields": {
                     "edit": true,
                     "resourceName": "Apie\\Fixtures\\Entities\\Polymorphic\\Animal",
-                    "display-form": true
-                }
+                    "display-form": true,
+                    "_apie_action": "Apie\\Common\\Actions\\ModifyObjectAction"
+                },
+                "x-bounded-context-id": "other"
             }
         }
     ]

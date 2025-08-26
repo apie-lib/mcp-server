@@ -1,10 +1,13 @@
 <?php
 namespace Apie\McpServer;
 
+use Apie\Core\ValueObjects\Utils;
 use Apie\McpServer\Factory\RunnerFactoryInterface;
 use Apie\McpServer\Tool\ToolFactory;
 use Apie\McpServer\Tool\ToolRunner;
 use Mcp\Server\Server;
+use Mcp\Types\CallToolRequestParams;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 
 class RunMcpServerCommand extends \Symfony\Component\Console\Command\Command
@@ -13,6 +16,7 @@ class RunMcpServerCommand extends \Symfony\Component\Console\Command\Command
         private readonly RunnerFactoryInterface $runnerFactory,
         private readonly ToolFactory $toolFactory,
         private readonly ToolRunner $toolRunner,
+        private readonly LoggerInterface $logger
     ) {
         parent::__construct('apie:mcp-server');
     }
@@ -27,14 +31,15 @@ class RunMcpServerCommand extends \Symfony\Component\Console\Command\Command
     protected function execute(\Symfony\Component\Console\Input\InputInterface $input, \Symfony\Component\Console\Output\OutputInterface $output): int
     {
         $output->writeln("Creating MCP Server");
-        $server = new Server('apie-server');
-        $server->registerHandler('tools/list', function ($params) {
+        $server = new Server('apie-server', $this->logger);
+        $server->registerHandler('tools/list', function () {
             return $this->toolFactory->createList();
         });
-        $server->registerHandler('tools/call', function ($params) {
+        $server->registerHandler('tools/call', function (CallToolRequestParams $params) {
             $name = $params->name;
             $tool = $this->toolFactory->findByName($name);
-            return $this->toolRunner->run($tool, $params);
+            $result = $this->toolRunner->run($tool, Utils::toArray($params->arguments ?? []));
+            return $result;
         });
 
         $output->writeln('MCP Server is running...');
