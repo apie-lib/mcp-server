@@ -107,7 +107,7 @@ class RunMcpServerCommandTest extends TestCase
 
         // the output of the command in the console
         $output = $tester->getDisplay();
-        $this->assertStringContainsString('Runner has ended', $output);
+        $this->assertStringContainsString('MCP Server is ending', $output);
 
     }
 }

@@ -52,7 +52,8 @@ class McpServerServiceProvider extends ServiceProvider
                 return new \Apie\McpServer\Tool\ToolRunner(
                     $app->make(\Apie\Core\ContextBuilders\ContextBuilderFactory::class),
                     $app->make('apie'),
-                    $app->make(\Psr\Log\LoggerInterface::class)
+                    $app->make(\Psr\Log\LoggerInterface::class),
+                    $app->bound(\Apie\Console\ConsoleCliStorage::class) ? $app->make(\Apie\Console\ConsoleCliStorage::class) : null
                 );
             }
         );

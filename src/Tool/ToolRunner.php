@@ -2,6 +2,7 @@
 namespace Apie\McpServer\Tool;
 
 use Apie\Common\ApieFacade;
+use Apie\Console\ConsoleCliStorage;
 use Apie\Core\Actions\ActionResponse;
 use Apie\Core\Actions\ActionResponseStatus;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
@@ -19,7 +20,8 @@ class ToolRunner
     public function __construct(
         private readonly ContextBuilderFactory $contextBuilder,
         private readonly ApieFacade $apieFacade,
-        private readonly LoggerInterface $logger
+        private readonly LoggerInterface $logger,
+        private readonly ?ConsoleCliStorage $consoleCliStorage = null
     ) {
     }
 
@@ -31,6 +33,9 @@ class ToolRunner
             $fields = Utils::toArray($meta["x-fields"]);
             if (isset($meta['x-bounded-context-id'])) {
                 $fields[ContextConstants::BOUNDED_CONTEXT_ID] = $meta['x-bounded-context-id'];
+            }
+            if ($this->consoleCliStorage) {
+                $fields[ConsoleCliStorage::class] = $this->consoleCliStorage;
             }
             $fields[ContextConstants::MCP_SERVER] = true;
             $fields[Tool::class] = true;

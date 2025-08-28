@@ -17,6 +17,7 @@ services:
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
       - '@apie'
       - '@Psr\Log\LoggerInterface'
+      - '@?Apie\Console\ConsoleCliStorage'
   Apie\McpServer\Tool\ToolFactory:
     arguments:
       - '@Apie\Core\ContextBuilders\ContextBuilderFactory'
