@@ -600,7 +600,13 @@
                 "properties": {
                     "animalType": {
                         "type": "string",
-                        "nullable": false
+                        "nullable": false,
+                        "enum": [
+                            "cow",
+                            "elephant",
+                            "fish"
+                        ],
+                        "format": "enum"
                     },
                     "id": {
                         "type": "string",

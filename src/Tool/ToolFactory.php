@@ -22,9 +22,12 @@ use Apie\Core\BoundedContext\BoundedContextHashmap;
 use Apie\Core\Context\ApieContext;
 use Apie\Core\ContextBuilders\ContextBuilderFactory;
 use Apie\Core\ContextConstants;
+use Apie\Core\Datalayers\ApieDatalayer;
+use Apie\Core\Datalayers\ApieDatalayerWithFilters;
 use Apie\Core\Identifiers\KebabCaseSlug;
 use Apie\Core\Metadata\MetadataFactory;
 use Apie\SchemaGenerator\SchemaGenerator;
+use cebe\openapi\spec\Schema;
 use Mcp\Types\ListToolsResult;
 use Mcp\Types\Tool;
 use Mcp\Types\ToolInputSchema;
@@ -149,11 +152,17 @@ class ToolFactory
 
     /**
      * @see https://ai.google.dev/api/caching#Schema
-     * @param array<string, mixed> $property
+     * @param array<string, mixed>|Schema|stdClass $property
      * @return array<string, mixed>
      */
-    private function filterProperty(array $property): array
+    private function filterProperty(array|Schema|\stdClass $property): array
     {
+        if ($property instanceof Schema) {
+            $property = (array) $property->getSerializableData();
+        }
+        if ($property instanceof \stdClass) {
+            $property = (array) $property;
+        }
         $filtered = [
             'type' => $property['type'] ?? 'object',
         ];
@@ -364,13 +373,84 @@ class ToolFactory
             . $definition->getBoundedContextId()->toNative()
             . '-'
             . KebabCaseSlug::fromClass($class);
+
+        $context = $this->contextBuilder->createGeneralContext(
+            [
+                ToolFactory::class => $this,
+                ContextConstants::MCP_SERVER => true,
+                SchemaGenerator::class => $this->schemaGenerator,
+                ContextConstants::BOUNDED_CONTEXT_ID => $definition->getBoundedContextId()->toNative(),
+                BoundedContext::class => $this->boundedContextHashmap[$definition->getBoundedContextId()->toNative()],
+            ]
+        );
+        $properties = [];
+        $dataLayer = $context->getContext(ApieDatalayer::class, false);
+        if ($dataLayer instanceof ApieDatalayerWithFilters) {
+            $fieldMetadata = MetadataFactory::getResultMetadata(
+                $class,
+                $context
+            )->getHashmap();
+            $filterColumns = $dataLayer->getFilterColumns($class, $definition->getBoundedContextId());
+            if ($filterColumns !== null) {
+                $properties['filters'] = [
+                    'type' => 'object',
+                    'properties' => [
+                        'search' => [
+                            'type' => 'string',
+                            'minLength' => 1,
+                        ],
+                        'items_per_page' => [
+                            'type' => 'integer',
+                            'minimum' => 1
+                        ],
+                        'page' => [
+                            'type' => 'integer',
+                            'minimum' => 0
+                        ],
+                    ],
+                    'required' => []
+                ];
+                foreach ($filterColumns as $filterColumn) {
+                    $schema = new Schema([
+                        'type' => 'string',
+                        'minimum' => 1,
+                    ]);
+                    if (isset($fieldMetadata[$filterColumn])) {
+                        $schema = $this->schemaGenerator->createSchema(
+                            $fieldMetadata[$filterColumn]->allowsNull() ? '?string' : 'string',
+                            true
+                        );
+                    }
+                    $properties['filters']['properties'][$filterColumn] = $schema->getSerializableData();
+                }
+            }
+            $orderByColumns = $dataLayer->getOrderByColumns($class, $definition->getBoundedContextId());
+            if ($orderByColumns?->count()) {
+                $values = [];
+                foreach ($orderByColumns as $orderByColumn) {
+                    array_push(
+                        $values,
+                        $orderByColumn,
+                        '+' . $orderByColumn,
+                        '-' . $orderByColumn
+                    );
+                }
+                $properties['order_by'] = [
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'string',
+                        'enum' => $values,
+                    ]
+                ];
+            }
+        }
+        
         $tool = new Tool(
             $name,
             $this->toToolInputSchema(
                 [
                     'type' => 'object',
-                    'properties' => [
-                    ],
+                    'properties' => $properties,
                     'required' => []
                 ]
             ),

@@ -24,6 +24,7 @@
     "apie/common": "self.version",
     "apie/core": "self.version",
     "apie/schema-generator": "self.version",
+    "cebe/php-openapi": "^1.5",
     "logiscape/mcp-sdk-php": "^1.0",
     "symfony/console": "^7.2"
   },
