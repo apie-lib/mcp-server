@@ -27,7 +27,7 @@ class RemoteMcpController
     {
         $server = new Server('apie-server');
         $hadError = false;
-        $server->registerHandler('tools/list', function ($params) use (&$hadError){
+        $server->registerHandler('tools/list', function ($params) use (&$hadError) {
             try {
                 $res = $this->toolFactory->createList();
                 $hadError = false;
