@@ -88,8 +88,7 @@
                         "type": "array",
                         "nullable": true,
                         "items": {
-                            "type": "string",
-                            "nullable": true
+                            "type": "string"
                         }
                     },
                     "orderLines": {
@@ -248,8 +247,7 @@
                         "type": "array",
                         "nullable": true,
                         "items": {
-                            "type": "string",
-                            "nullable": true
+                            "type": "string"
                         }
                     },
                     "id": {
