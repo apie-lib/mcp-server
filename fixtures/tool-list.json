@@ -373,6 +373,38 @@
             }
         },
         {
+            "name": "run-global-default-fake-login-method-verify-authentication",
+            "inputSchema": {
+                "type": "object",
+                "required": [
+                    "username",
+                    "password"
+                ],
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Calls method verifyAuthentication and returns return value.",
+            "_meta": {
+                "x-definition": "Apie\\Common\\Actions\\RunAction",
+                "x-method-class": "Apie\\Fixtures\\Actions\\FakeLogin",
+                "x-method": "verifyAuthentication",
+                "x-fields": {
+                    "method-call": true,
+                    "serviceClass": "Apie\\Fixtures\\Actions\\FakeLogin",
+                    "methodName": "verifyAuthentication",
+                    "display-form": true,
+                    "_apie_action": "Apie\\Common\\Actions\\RunAction"
+                },
+                "x-bounded-context-id": "default"
+            }
+        },
+        {
             "name": "run-object-default-user-with-address-method-verify-authentication",
             "inputSchema": {
                 "type": "object",
