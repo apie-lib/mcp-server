@@ -116,7 +116,7 @@ class ToolFactory
 
     public function createObjectMethodCallTool(
         RunResourceMethodDefinition $definition
-    ) {
+    ): Tool {
         $class = $definition->getResourceName();
         $method = $definition->getMethod();
         $name = 'run-object-'
