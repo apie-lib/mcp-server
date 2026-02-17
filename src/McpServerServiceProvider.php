@@ -14,7 +14,7 @@ class McpServerServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\McpServer\RunMcpServerCommand::class,
             function ($app) {
                 return new \Apie\McpServer\RunMcpServerCommand(
@@ -38,7 +38,7 @@ class McpServerServiceProvider extends ServiceProvider
         $this->app->tag([\Apie\McpServer\RunMcpServerCommand::class], 'console.command');
         $this->app->bind(\Apie\McpServer\Factory\RunnerFactoryInterface::class, \Apie\McpServer\Factory\RunnerFactory::class);
         
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\McpServer\Factory\RunnerFactory::class,
             function ($app) {
                 return new \Apie\McpServer\Factory\RunnerFactory(
@@ -46,7 +46,7 @@ class McpServerServiceProvider extends ServiceProvider
                 );
             }
         );
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\McpServer\Tool\ToolRunner::class,
             function ($app) {
                 return new \Apie\McpServer\Tool\ToolRunner(
@@ -57,7 +57,7 @@ class McpServerServiceProvider extends ServiceProvider
                 );
             }
         );
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\McpServer\Tool\ToolFactory::class,
             function ($app) {
                 return new \Apie\McpServer\Tool\ToolFactory(
@@ -68,7 +68,7 @@ class McpServerServiceProvider extends ServiceProvider
                 );
             }
         );
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\McpServer\Controllers\RemoteMcpController::class,
             function ($app) {
                 return new \Apie\McpServer\Controllers\RemoteMcpController(
@@ -92,7 +92,7 @@ class McpServerServiceProvider extends ServiceProvider
         $this->app->tag([\Apie\McpServer\Controllers\RemoteMcpController::class], 'controller.service_arguments');
         $this->app->bind('apie.mcp_store', \Mcp\Server\Transport\Http\SessionStoreInterface::class);
         
-        $this->app->singleton(
+        $this->registerSingleton(
             \Apie\McpServer\RouteDefinitions\McpServerRouteDefinitionProvider::class,
             function ($app) {
                 return new \Apie\McpServer\RouteDefinitions\McpServerRouteDefinitionProvider(
@@ -111,7 +111,7 @@ class McpServerServiceProvider extends ServiceProvider
             )
         );
         $this->app->tag([\Apie\McpServer\RouteDefinitions\McpServerRouteDefinitionProvider::class], 'apie.common.route_definition');
-        $this->app->singleton(
+        $this->registerSingleton(
             \Mcp\Server\Transport\Http\InMemorySessionStore::class,
             function ($app) {
                 return new \Mcp\Server\Transport\Http\InMemorySessionStore(
@@ -119,7 +119,7 @@ class McpServerServiceProvider extends ServiceProvider
                 );
             }
         );
-        $this->app->singleton(
+        $this->registerSingleton(
             \Mcp\Server\Transport\Http\FileSessionStore::class,
             function ($app) {
                 return new \Mcp\Server\Transport\Http\FileSessionStore(
