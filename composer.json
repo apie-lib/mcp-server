@@ -19,6 +19,9 @@
       "Apie\\Tests\\McpServer\\": "tests/"
     }
   },
+  "conflict": {
+    "logiscape/mcp-sdk-php": "^1.5"
+  },
   "require": {
     "php": ">=8.3",
     "apie/common": "self.version",
