@@ -14,6 +14,7 @@ use Apie\Serializer\DecoderHashmap;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+use Symfony\Component\DependencyInjection\ServiceLocator;
 
 class ToolFactoryTest extends TestCase
 {
@@ -25,7 +26,7 @@ class ToolFactoryTest extends TestCase
             ContextBuilderFactory::create($hashmap, DecoderHashmap::create()),
             new SchemaGenerator(ComponentsBuilderFactory::createComponentsBuilderFactory()),
             $hashmap,
-            new ActionDefinitionProvider(),
+            new ActionDefinitionProvider(new ServiceLocator([])),
         );
         $actual = $testItem->createCreateObjectTool(new CreateResourceActionDefinition(
             new ReflectionClass(UserWithAutoincrementKey::class),
@@ -42,7 +43,7 @@ class ToolFactoryTest extends TestCase
             ContextBuilderFactory::create($hashmap, DecoderHashmap::create()),
             new SchemaGenerator(ComponentsBuilderFactory::createComponentsBuilderFactory()),
             $hashmap,
-            new ActionDefinitionProvider(),
+            new ActionDefinitionProvider(new ServiceLocator([])),
         );
         $fixturePath = __DIR__ . '/../../fixtures/tool-list.json';
         $actual = json_encode($testItem->createList(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);

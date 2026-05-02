@@ -23,6 +23,7 @@ use Mcp\Types\RequestParams;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\DependencyInjection\ServiceLocator;
 
 class RunMcpServerCommandTest extends TestCase
 {
@@ -92,7 +93,7 @@ class RunMcpServerCommandTest extends TestCase
                 $contextBuilder,
                 new SchemaGenerator(ComponentsBuilderFactory::createComponentsBuilderFactory()),
                 $hashmap,
-                new ActionDefinitionProvider(),
+                new ActionDefinitionProvider(new ServiceLocator([])),
             ),
             new ToolRunner(
                 $contextBuilder,
