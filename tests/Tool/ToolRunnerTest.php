@@ -9,6 +9,7 @@ use Apie\Common\Actions\RemoveObjectAction;
 use Apie\Common\Actions\RunAction;
 use Apie\Common\ApieFacade;
 use Apie\Common\ContextBuilderFactory;
+use Apie\Common\ContextBuilders\AddLockManagerContextBuilder;
 use Apie\Common\Interfaces\RouteDefinitionProviderInterface;
 use Apie\Core\Attributes\Context;
 use Apie\Core\BoundedContext\BoundedContextId;
@@ -64,7 +65,11 @@ class ToolRunnerTest extends TestCase
         ]);
 
         $hashmap = BoundedContextFactory::createHashmapWithMultipleContexts();
-        $contextBuilder = ContextBuilderFactory::create($hashmap, DecoderHashmap::create());
+        $contextBuilder = ContextBuilderFactory::create(
+            $hashmap,
+            DecoderHashmap::create(),
+            new AddLockManagerContextBuilder()
+        );
 
         $apieFacade = new ApieFacade(
             $this->createMock(RouteDefinitionProviderInterface::class),
